@@ -1,18 +1,20 @@
 # The last version of vagrant configuration
 Vagrant.configure("2") do |config|
 
-  # Configure the image of virtualbox
-  config.vm.box = "ubuntu-server-14.04"
-  config.vm.box_url = "https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
+  # Configure the image of virtualbox ubuntu 16.04 64-bits
+  config.vm.box = "ubuntu/xenial64"
 
   # Create machine call tbl
   config.vm.define :tbl do |web_config|
 
-    # Create a private network with ip defined
-    web_config.vm.network "private_network", ip: "192.168.50.10"
+    # Create a private network IP
+    config.vm.network "private_network", ip: "192.168.33.10"
 
     # Mapping ports to localhost 8080
     config.vm.network :forwarded_port, host_ip: "127.0.0.1", guest: 8080, host: 8080
+
+    # Syncronize current folder with vangrant folder
+    config.vm.synced_folder ".", "/home/vagrant"
 
     # Provision to install the enviroment dependency
     config.vm.provision "shell", inline: <<-SHELL
@@ -22,6 +24,7 @@ Vagrant.configure("2") do |config|
 
       # Set Ubuntu Language
       sudo locale-gen en_GB.UTF-8
+      sudo locale-gen pt_BR.UTF-8
 
       # Install Python, SQLite and pip
       sudo apt-get install -y python3-dev sqlite python3-pip
@@ -31,11 +34,12 @@ Vagrant.configure("2") do |config|
 
       # Install and configure python virtualenvwrapper.
       sudo pip3 install virtualenvwrapper
-      if ! grep -q VIRTUALENV_ALREADY_ADDED /home/vagrant/.bashrc; then
-        echo "# VIRTUALENV_ALREADY_ADDED" >> /home/vagrant/.bashrc
-        echo "WORKON_HOME=~/.virtualenvs" >> /home/vagrant/.bashrc
-        echo "PROJECT_HOME=/vagrant" >> /home/vagrant/.bashrc
-        echo "source /usr/local/bin/virtualenvwrapper.sh" >> /home/vagrant/.bashrc
+      if ! grep -q VIRTUALENV_ALREADY_ADDED /home/ubuntu/.bashrc; then
+        echo "# VIRTUALENV_ALREADY_ADDED" >> /home/ubuntu/.bashrc
+        echo "WORKON_HOME=~/.virtualenvs" >> /home/ubuntu/.bashrc
+        echo "PROJECT_HOME=/vagrant" >> /home/ubuntu/.bashrc
+        echo "VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3" >> /home/ubuntu/.bashrc
+        echo "source /usr/local/bin/virtualenvwrapper.sh" >> /home/ubuntu/.bashrc
       fi
     SHELL
   end

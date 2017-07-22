@@ -1,0 +1,18 @@
+version: '1.0'
+services:
+
+  nginx:
+    image: nginx: 1.11
+    container_name: nginx_proxy
+    depends_on:
+      - tbl
+    ports:
+      - '8000:8000'
+
+  tbl:
+    build: .
+    container_name: team-based-learning
+    volumes:
+      - $PWD
+    ports:
+      - '8000:8080'
