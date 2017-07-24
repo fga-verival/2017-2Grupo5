@@ -37,7 +37,7 @@ class UserProfileManager(BaseUserManager):
 
         return user
 
-    def create_super_user(self, email, name, password):
+    def create_superuser(self, email, name, password):
         """
         Create and saves a new superuser with given details.
         """
@@ -110,7 +110,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     last_login = models.DateTimeField(
         'Last Login',
-        help_text="Date of last logged in user."
+        help_text="Date of last logged in user.",
+        blank=True,
+        null=True
     )
 
     created_at = models.DateTimeField(
@@ -133,7 +135,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     # Is a list of fields that are required for all users, the username don't
     # need to be passed.
-    REQUIRED_FIELDS = ['name', 'is_teacher']
+    REQUIRED_FIELDS = ['name']
 
     def __str__(self):
         """
