@@ -1,18 +1,13 @@
-version: '1.0'
+version: '2'
 services:
 
-  nginx:
-    image: nginx: 1.11
-    container_name: nginx_proxy
-    depends_on:
-      - tbl
-    ports:
-      - '8000:8000'
-
   tbl:
+    # Uses an image that's built from the Dockerfile in the current directory
     build: .
-    container_name: team-based-learning
+    # Mounts the project directory on the host to /tbl inside the container, allowing you
+    # to modify the code without having to rebuild the image
     volumes:
-      - $PWD
+      - .:/tbl
+    # Forwards the exposed port 8080 on the container to port 8080 on the host machine.
     ports:
-      - '8000:8080'
+      - '8080:8080'

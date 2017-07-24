@@ -110,7 +110,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     last_login = models.DateTimeField(
         'Last Login',
-        help_text="Date of last logged in user.",
+        help_text="Last moment the user logged in.",
         blank=True,
         null=True
     )
