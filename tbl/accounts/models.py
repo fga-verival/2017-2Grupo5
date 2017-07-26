@@ -166,3 +166,4 @@ class User(AbstractBaseUser, PermissionsMixin):
 
         verbose_name = "User"
         verbose_name_plural = "Users"
+        ordering = ('email',)
