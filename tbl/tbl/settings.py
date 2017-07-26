@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
-    'profiles',
+    'accounts',
 ]
 
 
@@ -89,7 +89,7 @@ DATABASES = {
 # Custom user profile
 # Tell Django to use our custom user model instead of its built in
 # default user model.
-AUTH_USER_MODEL = 'profiles.User'
+AUTH_USER_MODEL = 'accounts.User'
 
 
 # Password validation
