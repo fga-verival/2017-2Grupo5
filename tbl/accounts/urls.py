@@ -10,9 +10,4 @@ router.register(r'users', UserViewSet)
 urlpatterns = [
     # Determine automatically the routes by router
     url(r'^', include(router.urls)),
-    # Insert login and logout to the API
-    url(
-        r'^api-auth/',
-        include('rest_framework.urls', namespace='rest_framework')
-    )
 ]
