@@ -20,15 +20,15 @@ class UpdateOwnProfile(BasePermission):
         return obj.id == request.user.id
 
 
-class OnlyLogout(BasePermission):
+class IsOwnerOrReadOnly(BasePermission):
     """
-    Logged users can't create a user
+    Custom permission to only allow owners of an object to edit it.
     """
 
     def has_object_permission(self, request, view, obj):
-
-        if request.user:
-            return False
-        else:
+        # Read permission are allowed to any request.
+        if request.method in SAFE_METHODS:
             return True
 
+        # Write permission are only allowed to the owner.
+        return obj.owner == request.user
