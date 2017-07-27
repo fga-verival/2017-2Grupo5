@@ -1,4 +1,5 @@
 from django.conf.urls import url, include
+from rest_framework_jwt.views import obtain_jwt_token
 from . import views
 
 urlpatterns = [
@@ -18,12 +19,7 @@ urlpatterns = [
         name='details'
     ),
     url(
-        r'^login/$',
-        views.UserLoginAPIView.as_view(),
-        name='login'
+        r'^login/',
+        obtain_jwt_token
     ),
-    url(
-        r'^api-auth/',
-        include('rest_framework.urls')
-    )
 ]

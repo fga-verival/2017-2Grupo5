@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
-import django
+import datetime
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -129,3 +129,19 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 STATIC_URL = '/static/'
+
+# Django Rest Framework
+# http://www.django-rest-framework.org/
+# http://getblimp.github.io/django-rest-framework-jwt/
+REST_FRAMEWORK = {
+    # Use the extension ModHeaders of Chrome to login
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    ),
+}
+
+JWT_AUTH = {
+    # Expiration time of token: 30 min
+    # When expirated we need to get another token
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=1800),
+}
