@@ -1,7 +1,7 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, \
-                                       PermissionsMixin, \
-                                       BaseUserManager
+from django.contrib.auth.models import (
+    AbstractBaseUser, PermissionsMixin, BaseUserManager
+)
 
 
 class UserProfileManager(BaseUserManager):
@@ -79,8 +79,15 @@ class User(AbstractBaseUser, PermissionsMixin):
         blank=True
     )
 
+    course = models.CharField(
+        'Course',
+        help_text="Course of university or Period of school.",
+        max_length=100,
+        blank=True
+    )
+
     photo = models.ImageField(
-        upload_to='user',
+        upload_to='static/accounts',
         help_text="Photo of user.",
         verbose_name='Photo',
         blank=True,
@@ -99,12 +106,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(
         'Is Staff?',
         help_text="Verify if the user is a staff.",
-        default=False
-    )
-
-    is_teacher = models.BooleanField(
-        'Is Teacher?',
-        help_text="Verify if the user is a teacher or a student.",
         default=False
     )
 

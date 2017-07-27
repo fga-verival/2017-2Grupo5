@@ -1,7 +1,5 @@
 from rest_framework.serializers import (
-    ModelSerializer,
-    CharField,
-    ValidationError
+    ModelSerializer, CharField, ValidationError
 )
 from .models import User
 
@@ -13,7 +11,10 @@ class UserSerializer(ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'email', 'name', 'institution', 'photo')
+        fields = (
+            'id', 'email', 'name', 'institution', 'course', 'photo',
+            'created_at', 'updated_at'
+        )
 
 
 class UserRegisterSerializer(ModelSerializer):

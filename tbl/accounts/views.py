@@ -1,20 +1,14 @@
 from rest_framework.filters import (
-    SearchFilter,
-    OrderingFilter
+    SearchFilter, OrderingFilter
 )
 from rest_framework.permissions import (
-    AllowAny,
-    IsAuthenticatedOrReadOnly,
-    IsAuthenticated
+    AllowAny, IsAuthenticatedOrReadOnly, IsAuthenticated
 )
 from rest_framework.generics import (
-    CreateAPIView,
-    ListAPIView,
-    RetrieveUpdateDestroyAPIView,
+    CreateAPIView, ListAPIView, RetrieveUpdateDestroyAPIView,
 )
 from .serializers import (
-    UserSerializer,
-    UserRegisterSerializer
+    UserSerializer, UserRegisterSerializer
 )
 from .models import User
 from .permissions import UpdateOwnProfile
@@ -56,4 +50,4 @@ class UserAPIView(RetrieveUpdateDestroyAPIView):
 
     queryset = User.objects.all()
 
-    permission_classes = (IsAuthenticatedOrReadOnly, UpdateOwnProfile)
+    permission_classes = (IsAuthenticated, UpdateOwnProfile)
