@@ -13,8 +13,8 @@ install:
   - pip3 install -r tbl/requirements.txt
 
 before_script:
-  - python3 manage.py makemigrations
-  - python3 manage.py migrate
+  - python3 tbl/manage.py makemigrations
+  - python3 tbl/manage.py migrate
 
 script:
   - pytest --maxfail=1
