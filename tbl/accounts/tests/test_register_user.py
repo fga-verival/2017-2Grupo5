@@ -42,6 +42,7 @@ class CreateUserTestCase(APITestCase):
         self.assertEquals(User.objects.count(), 2)
         data = {
             'name': 'Fulano de Tal',
+            'is_teacher': True,
             'email': 'fulano@gmail.com',
             'password': 'fulano123456',
             'confirm_password': 'fulano123456'

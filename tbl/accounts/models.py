@@ -94,6 +94,12 @@ class User(AbstractBaseUser, PermissionsMixin):
         null=True
     )
 
+    is_teacher = models.BooleanField(
+        'Is Teacher?',
+        help_text="Verify if the user is teacher or student",
+        default=False
+    )
+
     # Use to determine if this user is currently active in the system
     # You can use it to disable user accounts
     is_active = models.BooleanField(
@@ -146,19 +152,26 @@ class User(AbstractBaseUser, PermissionsMixin):
 
         return self.email
 
-    def get_full_name(self):
+    @property
+    def full_name(self):
         """
         Used to get the user full name.
         """
 
         return self.name
 
-    def get_short_name(self):
+    @property
+    def short_name(self):
         """
         Used to get the user short name.
         """
+        LAST_NAME = -1
+        FIRST_NAME = 0
 
-        return str(self.name.split(" ")[0] + " " + self.name.split(" ")[1])
+        if len(self.name.split(" ")) >= 2:
+            return str(self.name.split(" ")[FIRST_NAME] + " " + self.name.split(" ")[LAST_NAME])
+        else:
+            return str(self.name)
 
     class Meta:
         """
