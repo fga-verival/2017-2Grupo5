@@ -20,6 +20,11 @@ urlpatterns = [
         name='details'
     ),
     url(
+        r'^(?P<pk>[0-9]+)/password$',
+        views.UserPasswordAPIView.as_view(),
+        name='password'
+    ),
+    url(
         r'^login/',
         obtain_jwt_token,
         name='login'

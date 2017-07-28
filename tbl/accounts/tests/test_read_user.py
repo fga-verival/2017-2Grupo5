@@ -76,7 +76,7 @@ class ReadUserTestCase(APITestCase):
         Test to not found the specific user.
         """
 
-        url = reverse('accounts:details', kwargs={'pk': 30})
+        url_invalid = reverse('accounts:details', kwargs={'pk': 30})
         serializer = UserSerializer(self.user)
-        response = self.client.get(url)
+        response = self.client.get(url_invalid)
         self.assertEquals(response.status_code, status.HTTP_404_NOT_FOUND)

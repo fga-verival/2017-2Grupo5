@@ -27,7 +27,6 @@ class UpdateUserTestCase(APITestCase):
         )
         self.client.force_authenticate(self.user)
         self.url = reverse('accounts:details', kwargs={'pk': self.user.pk})
-        self.url_invalid = reverse('accounts:details', kwargs={'pk': 30})
 
     def tearDown(self):
         """
@@ -45,7 +44,7 @@ class UpdateUserTestCase(APITestCase):
 
         data = UserSerializer(self.user).data
         data.update({'name': 'Pedro Callile'})
-        response = self.client.put(path=self.url, data=data)
+        response = self.client.put(self.url, data)
         self.assertEquals(response.status_code, status.HTTP_200_OK)
 
     def test_invalid_update_user(self):
@@ -78,7 +77,8 @@ class UpdateUserTestCase(APITestCase):
         Test to find user that not exists.
         """
 
+        url_invalid = reverse('accounts:details', kwargs={'pk': 30})
         data = UserSerializer(self.user).data
         data.update({'email': 'fulano@gmail.com'})
-        response = self.client.put(self.url_invalid, data)
+        response = self.client.put(url_invalid, data)
         self.assertEquals(response.status_code, status.HTTP_404_NOT_FOUND)
