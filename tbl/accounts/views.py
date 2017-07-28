@@ -23,6 +23,10 @@ class UserRegisterAPIView(CreateAPIView):
 
     permission_classes = [AllowAny]
 
+    # Take the authentication default off, you don't need to be
+    # authenticated to use this funcionality
+    authentication_classes = ()
+
 
 class UserListAPIView(ListAPIView):
     """
