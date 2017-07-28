@@ -1,0 +1,147 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-07-28 23:33+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: accounts/models.py:21
+msgid "Users must have an email address."
+msgstr "Usuário deve ter um endereço de email."
+
+#: accounts/models.py:65
+msgid "E-mail"
+msgstr "E-mail"
+
+#: accounts/models.py:66
+msgid "Email that will be used as username."
+msgstr "Email que será usado como login do usuário."
+
+#: accounts/models.py:71
+msgid "Name"
+msgstr "Nome"
+
+#: accounts/models.py:72
+msgid "Full user name."
+msgstr "Nome completo do usuário"
+
+#: accounts/models.py:77
+msgid "Institution"
+msgstr "Instituição"
+
+#: accounts/models.py:78
+msgid "University or School in which the user is inserted."
+msgstr "Universidade ou escola na qual o usuário está inserido."
+
+#: accounts/models.py:84
+msgid "Course"
+msgstr "Curso"
+
+#: accounts/models.py:85
+msgid "Course of university or Period of school."
+msgstr "Curso da universidade ou periodo escolar."
+
+#: accounts/models.py:92
+msgid "Photo of user."
+msgstr "Foto do usuário"
+
+#: accounts/models.py:93
+msgid "Photo"
+msgstr "Foto"
+
+#: accounts/models.py:99
+msgid "Is Teacher?"
+msgstr "É professor?"
+
+#: accounts/models.py:100
+msgid "Verify if the user is teacher or student"
+msgstr "Verifica se o usuário é professor ou aluno."
+
+#: accounts/models.py:107
+msgid "Is Active?"
+msgstr "Está ativo?"
+
+#: accounts/models.py:108
+msgid "Verify if the user is active."
+msgstr "Verifica se o usuário ainda é ativo no sistema."
+
+#: accounts/models.py:114
+msgid "Is Staff?"
+msgstr "É administrador?"
+
+#: accounts/models.py:115
+msgid "Verify if the user is a staff."
+msgstr "Verifica se o usuário é administrador."
+
+#: accounts/models.py:120
+msgid "Last Login"
+msgstr "Último login"
+
+#: accounts/models.py:121
+msgid "Last moment the user logged in."
+msgstr "Último momento em que o usuário logou."
+
+#: accounts/models.py:127
+msgid "Created at"
+msgstr "Criado em"
+
+#: accounts/models.py:128
+msgid "Date that the user is created."
+msgstr "Data de criação do usuário."
+
+#: accounts/models.py:133
+msgid "Updated at"
+msgstr "Atualizado em"
+
+#: accounts/models.py:134
+msgid "Date that the user is updated."
+msgstr "Data de atualização do usuário."
+
+#: accounts/models.py:182
+msgid "User"
+msgstr "Usuário"
+
+#: accounts/models.py:183
+msgid "Users"
+msgstr "Usuários"
+
+#: accounts/serializers.py:52 accounts/tests/test_update_password.py:90
+msgid "The new passwords do not match."
+msgstr "As senhas não combinam."
+
+#: accounts/serializers.py:56 accounts/tests/test_update_password.py:71
+msgid "Old password invalid."
+msgstr "Senha atual invalida."
+
+#: accounts/serializers.py:100
+msgid "This user has already registered."
+msgstr "Esse email de usuário já foi registrado."
+
+#: accounts/serializers.py:104 accounts/tests/test_register_user.py:112
+msgid "The passwords do not match."
+msgstr "As senhas não combinam."
+
+#: accounts/tests/test_register_user.py:72
+msgid "User with this E-mail already exists."
+msgstr "Usuário com este E-mail já existe."
+
+#: accounts/tests/test_register_user.py:92
+msgid "This field may not be blank."
+msgstr "Este campo não pode ficar vazio."
+
+#: accounts/tests/test_update_user.py:62
+msgid "Enter a valid email address."
+msgstr "Este email está invalido."

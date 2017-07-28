@@ -1,3 +1,4 @@
+from django.utils.translation import ugettext_lazy as _
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
@@ -68,7 +69,7 @@ class CreateUserTestCase(APITestCase):
         self.assertEquals(User.objects.count(), 2)
         self.assertEquals(
             response.data,
-            {'email': ['User with this E-mail already exists.']}
+            {'email': [_('User with this E-mail already exists.')]}
         )
 
     def test_invalid_email_create_user(self):
@@ -88,7 +89,7 @@ class CreateUserTestCase(APITestCase):
         self.assertEquals(User.objects.count(), 2)
         self.assertEquals(
             response.data,
-            {'email': ['This field may not be blank.']}
+            {'email': [_('This field may not be blank.')]}
         )
 
     def test_invalid_password_create_user(self):
@@ -108,5 +109,5 @@ class CreateUserTestCase(APITestCase):
         self.assertEquals(User.objects.count(), 2)
         self.assertEquals(
             response.data,
-            {'non_field_errors': ['The passwords do not match.']}
+            {'non_field_errors': [_('The passwords do not match.')]}
         )

@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import (
     AbstractBaseUser, PermissionsMixin, BaseUserManager
 )
@@ -17,7 +18,7 @@ class UserProfileManager(BaseUserManager):
         """
 
         if not email:
-            raise ValueError("Users must have an email address.")
+            raise ValueError(_("Users must have an email address."))
 
         # This will convert the email to lowercase.
         # Email will be standardized in the system.
@@ -61,76 +62,76 @@ class User(AbstractBaseUser, PermissionsMixin):
     """
 
     email = models.EmailField(
-        'E-mail',
-        help_text="Email that will be used as username.",
+        _('E-mail'),
+        help_text=_("Email that will be used as username."),
         unique=True
     )
 
     name = models.CharField(
-        'Name',
-        help_text="Full user name.",
+        _('Name'),
+        help_text=_("Full user name."),
         max_length=150
     )
 
     institution = models.CharField(
-        'Institution',
-        help_text="University or School in which the user is inserted.",
+        _('Institution'),
+        help_text=_("University or School in which the user is inserted."),
         max_length=100,
         blank=True
     )
 
     course = models.CharField(
-        'Course',
-        help_text="Course of university or Period of school.",
+        _('Course'),
+        help_text=_("Course of university or Period of school."),
         max_length=100,
         blank=True
     )
 
     photo = models.ImageField(
         upload_to='staticfiles/accounts',
-        help_text="Photo of user.",
-        verbose_name='Photo',
+        help_text=_("Photo of user."),
+        verbose_name=_('Photo'),
         blank=True,
         null=True
     )
 
     is_teacher = models.BooleanField(
-        'Is Teacher?',
-        help_text="Verify if the user is teacher or student",
+        _('Is Teacher?'),
+        help_text=_("Verify if the user is teacher or student"),
         default=False
     )
 
     # Use to determine if this user is currently active in the system
     # You can use it to disable user accounts
     is_active = models.BooleanField(
-        'Is Active?',
-        help_text="Verify if the user is active.",
+        _('Is Active?'),
+        help_text=_("Verify if the user is active."),
         default=True
     )
 
     # Transform the user to staff members that can manage de users
     is_staff = models.BooleanField(
-        'Is Staff?',
-        help_text="Verify if the user is a staff.",
+        _('Is Staff?'),
+        help_text=_("Verify if the user is a staff."),
         default=False
     )
 
     last_login = models.DateTimeField(
-        'Last Login',
-        help_text="Last moment the user logged in.",
+        _('Last Login'),
+        help_text=_("Last moment the user logged in."),
         blank=True,
         null=True
     )
 
     created_at = models.DateTimeField(
-        'Created at',
-        help_text="Date that the user is created.",
+        _('Created at'),
+        help_text=_("Date that the user is created."),
         auto_now_add=True
     )
 
     updated_at = models.DateTimeField(
-        'Updated at',
-        help_text="Date that the user is updated.",
+        _('Updated at'),
+        help_text=_("Date that the user is updated."),
         auto_now=True
     )
 
@@ -178,6 +179,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         Some information about user class.
         """
 
-        verbose_name = "User"
-        verbose_name_plural = "Users"
+        verbose_name = _("User")
+        verbose_name_plural = _("Users")
         ordering = ('email',)

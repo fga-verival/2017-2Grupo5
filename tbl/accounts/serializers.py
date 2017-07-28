@@ -1,3 +1,4 @@
+from django.utils.translation import ugettext_lazy as _
 from rest_framework.serializers import (
     ModelSerializer, CharField, ValidationError
 )
@@ -48,11 +49,11 @@ class UserPasswordSerializer(ModelSerializer):
 
         # Verify if new password and confirm password match.
         if new_password != confirm_password:
-            raise ValidationError('The new passwords do not match.')
+            raise ValidationError(_('The new passwords do not match.'))
 
         # Verify if the old password is correct.
         if not instance.check_password(password):
-            raise ValidationError('Old password invalid.')
+            raise ValidationError(_('Old password invalid.'))
 
         instance.set_password(new_password)
 
@@ -96,11 +97,11 @@ class UserRegisterSerializer(ModelSerializer):
         # Verify if exists another user with same email address
         user = User.objects.filter(email=email)
         if user.exists():
-            raise ValidationError('This user has already registered.')
+            raise ValidationError(_('This user has already registered.'))
 
         # Verify if the passwords not match.
         if password != confirm_password:
-            raise ValidationError('The passwords do not match.')
+            raise ValidationError(_('The passwords do not match.'))
 
         return data
 

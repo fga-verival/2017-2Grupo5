@@ -1,3 +1,4 @@
+from django.utils.translation import ugettext_lazy as _
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
@@ -67,7 +68,7 @@ class UpdateUserPasswordTestCase(APITestCase):
         self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEquals(
             response.data,
-            ['Old password invalid.']
+            [_('Old password invalid.')]
         )
 
     def test_invalid_update_user_new_password(self):
@@ -86,7 +87,7 @@ class UpdateUserPasswordTestCase(APITestCase):
         # Está correto porem a autenticação não funciona com as credenciais
         self.assertEquals(
             response.data,
-            ['The new passwords do not match.']
+            [_('The new passwords do not match.')]
         )
 
     def test_invalid_update_another_user_password(self):

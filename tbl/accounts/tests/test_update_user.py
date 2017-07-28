@@ -1,3 +1,4 @@
+from django.utils.translation import ugettext_lazy as _
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
@@ -58,7 +59,7 @@ class UpdateUserTestCase(APITestCase):
         self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEquals(
             response.data,
-            {'email': ['Enter a valid email address.']}
+            {'email': [_('Enter a valid email address.')]}
         )
 
     def test_invalid_update_another_user(self):

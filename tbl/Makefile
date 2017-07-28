@@ -16,11 +16,19 @@ superuser:
 
 shell:
 	# Run iteractive shell of project.
-	python manage.py shell_plus
+	python3 manage.py shell_plus
 
 notebook:
 	# Run iteractive shell notebook of project
-	python manage.py shell_plus --notebook
+	python3 manage.py shell_plus --notebook
+
+makemessages:
+	# Create a django.po to insert translations (pt-br)
+	django-admin makemessages -l pt_BR
+
+compilemessages:
+	# Create translations
+	django-admin compilemessages
 
 test:
 	# Stop execution of tests when the second test fail
