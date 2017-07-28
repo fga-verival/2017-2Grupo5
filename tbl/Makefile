@@ -22,6 +22,16 @@ notebook:
 	# Run iteractive shell notebook of project
 	python manage.py shell_plus --notebook
 
-tests:
+test:
 	# Stop execution of tests when the second test fail
 	pytest --maxfail=2
+
+coverage:
+	# Run coverage on terminal
+	pytest --cov=.
+
+sendcoverage:
+	# Run coverage to XML file
+	# export CODACY_PROJECT_TOKEN=<PROJECT API TOKEN>
+	pytest --cov-report xml --cov=.
+	python-codacy-coverage -r coverage.xml
