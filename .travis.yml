@@ -1,12 +1,12 @@
 language: python
 
 python:
-  - "3.5"     # 3.5 master branch
-  - "3.5-dev" # 3.5 development branch
+  - "3.5"
 
 before_install:
   - sudo apt-get update
-  - sudo apt-get install -y python3-dev, libpq-dev
+  - sudo apt-get install -y python3-dev
+  - sudo apt-get install -y libpq-dev
   - sudo apt-get install -y sqlite
 
 install:
@@ -18,12 +18,3 @@ before_script:
 
 script:
   - python3 tbl/manage.py test
-
-# deploy:
-#   provider: heroku
-#   api_key:
-#     secure: ""
-#   app: tbl
-#   run:
-#     - python3 manage.py makemigrations
-#     - python3 manage.py migrate
