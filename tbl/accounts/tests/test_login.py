@@ -1,4 +1,5 @@
 from django.urls import reverse
+from django.contrib.auth import SESSION_KEY
 from rest_framework import status
 from rest_framework.test import APITestCase
 from accounts.models import User
@@ -44,6 +45,7 @@ class LoginTestCase(APITestCase):
         self.client.force_authenticate(self.user)
         response = self.client.get(self.url)
         self.assertEquals(response.status_code, status.HTTP_200_OK)
+        self.assertTrue(response.wsgi_request.user.is_authenticated())
 
     def test_not_logged(self):
         """
@@ -51,4 +53,5 @@ class LoginTestCase(APITestCase):
         """
 
         response = self.client.get(self.url)
+        self.assertTrue(not response.wsgi_request.user.is_authenticated())
         self.assertEquals(response.status_code, status.HTTP_401_UNAUTHORIZED)

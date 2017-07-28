@@ -25,7 +25,7 @@ urlpatterns = [
         name='password'
     ),
     url(
-        r'^login/',
+        r'^login/$',
         obtain_jwt_token,
         name='login'
     ),

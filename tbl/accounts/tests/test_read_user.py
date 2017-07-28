@@ -77,6 +77,5 @@ class ReadUserTestCase(APITestCase):
         """
 
         url_invalid = reverse('accounts:details', kwargs={'pk': 30})
-        serializer = UserSerializer(self.user)
         response = self.client.get(url_invalid)
         self.assertEquals(response.status_code, status.HTTP_404_NOT_FOUND)
