@@ -27,7 +27,7 @@ Vagrant.configure("2") do |config|
       sudo locale-gen pt_BR.UTF-8
 
       # Install Python, SQLite and pip
-      sudo apt-get install -y python3-dev sqlite python3-pip
+      sudo apt-get install -y python3-dev sqlite python3-pip, libpq-dev
 
       # Upgrade pip to the lastest version
       sudo pip3 install --upgrade pip

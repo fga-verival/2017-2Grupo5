@@ -87,7 +87,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
 
     photo = models.ImageField(
-        upload_to='static/accounts',
+        upload_to='staticfiles/accounts',
         help_text="Photo of user.",
         verbose_name='Photo',
         blank=True,

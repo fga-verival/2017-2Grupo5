@@ -12,18 +12,20 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 import datetime
+import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'n=38@=sss#wz02i6j^%edl3-0n^=5l%^d(t=q^a088hi816-f0'
+SECRET_KEY = os.getenv('SECRET_KEY', 'SECRET_KEY_DEFAULT')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-ALLOWED_HOSTS = []
+DEBUG = False
+# Allow all domains to access this aplication
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -36,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
-    'django_extensions',
     'accounts',
 ]
 
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
 # Middlewares
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -88,6 +90,11 @@ DATABASES = {
     }
 }
 
+# Configure database to deploy
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
+
+
 # Custom user profile
 # Tell Django to use our custom user model instead of its built in
 # default user model.
@@ -120,7 +127,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'pt-br'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
@@ -129,6 +136,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_URL = '/static/'
 
 # Django Rest Framework
@@ -149,3 +157,13 @@ JWT_AUTH = {
     # When expirated we need to get another token
     'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=1800),
 }
+
+
+# Heroku settings configuration
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Sobrescrever as configurações do settings.py com as do local_settings.py
+try:
+    from .local_settings import *
+except ImportError:
+    pass

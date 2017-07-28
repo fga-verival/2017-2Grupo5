@@ -14,7 +14,8 @@ RUN apt-get -y upgrade
 # Install dependecies
 RUN apt-get install -y python3-dev \
     sqlite \
-    python3-pip
+    python3-pip \
+    libpq-dev
 RUN pip3 install --upgrade pip
 RUN pip3 install -r tbl/requirements.txt
 
