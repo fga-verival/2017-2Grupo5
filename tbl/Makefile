@@ -24,11 +24,11 @@ notebook:
 
 test:
 	# Stop execution of tests when the second test fail
-	pytest --maxfail=2
+	pytest --maxfail=1
 
 coverage:
 	# Run coverage on terminal
-	pytest --cov=.
+	pytest --maxfail=1 --cov=.
 
 sendcoverage:
 	# Run coverage to XML file
