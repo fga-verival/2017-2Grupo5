@@ -17,22 +17,78 @@ class UserSerializer(ModelSerializer):
         )
 
 
+class UserPasswordSerializer(ModelSerializer):
+    """
+    A serializer to edit user password.
+    """
+
+    password = CharField(write_only=True, style={'input_type': 'password'})
+    new_password = CharField(
+        write_only=True,
+        style={'input_type': 'password'}
+    )
+    confirm_password = CharField(
+        write_only=True,
+        style={'input_type': 'password'}
+    )
+
+    class Meta:
+        model = User
+        fields = ('password', 'new_password', 'confirm_password')
+
+    @staticmethod
+    def update(instance, validated_data):
+        """
+        Update the user password.
+        """
+
+        password = validated_data['password']
+        new_password = validated_data['new_password']
+        confirm_password = validated_data['confirm_password']
+
+        # Verify if new password and confirm password match.
+        if new_password != confirm_password:
+            raise ValidationError('The new passwords do not match.')
+
+        # Verify if the old password is correct.
+        if not instance.check_password(password):
+            raise ValidationError('Old password invalid.')
+
+        instance.set_password(new_password)
+
+        instance.save()
+
+        return instance
+
+
 class UserRegisterSerializer(ModelSerializer):
     """
     A serializer to register a new user.
     """
 
-    confirm_password = CharField()
+    password = CharField(
+        write_only=True,
+        style={'input_type': 'password'}
+    )
+
+    confirm_password = CharField(
+        write_only=True,
+        style={'input_type': 'password'}
+    )
 
     class Meta:
         model = User
-        fields = ['name', 'email', 'is_teacher', 'password', 'confirm_password']
-        extra_kwargs = {
-            'password': {'write_only': True},
-            'confirm_password': {'write_only': True}
-        }
+        fields = [
+            'name', 'email', 'is_teacher', 'password', 'confirm_password'
+        ]
 
-    def validate(self, data):
+    @staticmethod
+    def validate(data):
+        """
+        Validate if existis another user with same email address and verify
+        if the password not match.
+        """
+
         email = data['email']
         password = data['password']
         confirm_password = data['confirm_password']
@@ -48,7 +104,8 @@ class UserRegisterSerializer(ModelSerializer):
 
         return data
 
-    def create(self, validated_data):
+    @staticmethod
+    def create(validated_data):
         """
         Create and return a new user.
         """
@@ -61,4 +118,4 @@ class UserRegisterSerializer(ModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
 
-        return validated_data
+        return user

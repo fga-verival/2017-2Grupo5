@@ -1,14 +1,27 @@
 run:
-	python3 manage.py runserver 0.0.0.0:8080
+	# Run the development server
+	python3 manage.py runserver_plus 0.0.0.0:8080
 
 migrations:
+	# Create all migrations from models
 	python3 manage.py makemigrations
 
 migrate:
+	# Migrate all migrations on database
 	python3 manage.py migrate
 
 superuser:
+	# Create a super user on system.
 	python3 manage.py createsuperuser
 
 shell:
-	python3 manage.py shell
+	# Run iteractive shell of project.
+	python manage.py shell_plus
+
+notebook:
+	# Run iteractive shell notebook of project
+	python manage.py shell_plus --notebook
+
+tests:
+	# Stop execution of tests when the second test fail
+	pytest --maxfail=2

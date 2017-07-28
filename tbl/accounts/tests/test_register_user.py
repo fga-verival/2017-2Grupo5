@@ -47,7 +47,7 @@ class CreateUserTestCase(APITestCase):
             'password': 'fulano123456',
             'confirm_password': 'fulano123456'
         }
-        response = self.client.post(path=self.url, data=data)
+        response = self.client.post(self.url, data)
         self.assertEquals(response.status_code, status.HTTP_201_CREATED)
         self.assertEquals(User.objects.count(), 3)
 
@@ -63,7 +63,7 @@ class CreateUserTestCase(APITestCase):
             'password': 'fulano123456',
             'confirm_password': 'fulano123456'
         }
-        response = self.client.post(path=self.url, data=data)
+        response = self.client.post(self.url, data)
         self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEquals(User.objects.count(), 2)
         self.assertEquals(

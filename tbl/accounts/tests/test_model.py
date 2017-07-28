@@ -30,6 +30,7 @@ class LoginTestCase(APITestCase):
         self.user3 = User.objects.create(
             name='Jose da Silva Pereira',
             email='jose@gmail.com',
+            is_teacher=True,
             password='jose123456'
         )
 
@@ -62,3 +63,13 @@ class LoginTestCase(APITestCase):
         self.assertEquals(self.user1.short_name, self.user1.name)
         self.assertEquals(self.user2.short_name, 'Maria Fatima')
         self.assertEquals(self.user3.short_name, 'Jose Pereira')
+
+    def test_is_teacher_or_students(self):
+        """
+        Teste to verify if user is a teacher or a student
+        """
+
+        self.assertEquals(self.superuser.is_teacher, False)
+        self.assertEquals(self.user1.is_teacher, False)
+        self.assertEquals(self.user2.is_teacher, False)
+        self.assertEquals(self.user3.is_teacher, True)
