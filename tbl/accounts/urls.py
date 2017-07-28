@@ -1,7 +1,8 @@
-from django.conf.urls import url, include
+from django.conf.urls import url
 from rest_framework_jwt.views import obtain_jwt_token
 from . import views
 
+app_name = 'accounts'
 urlpatterns = [
     url(
         r'^$',
@@ -20,6 +21,7 @@ urlpatterns = [
     ),
     url(
         r'^login/',
-        obtain_jwt_token
+        obtain_jwt_token,
+        name='login'
     ),
 ]
