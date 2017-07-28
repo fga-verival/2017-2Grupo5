@@ -18,6 +18,10 @@ before_script:
 
 script:
   - pytest --maxfail=1
+  - pytest --cov-report xml --cov=.
+  - python-codacy-coverage -r coverage.xml
+
+
 
 # deploy:
 #   provider: heroku
