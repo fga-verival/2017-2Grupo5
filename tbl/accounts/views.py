@@ -2,13 +2,13 @@ from rest_framework.filters import (
     SearchFilter, OrderingFilter
 )
 from rest_framework.permissions import (
-    AllowAny, IsAuthenticatedOrReadOnly, IsAuthenticated
+    AllowAny, IsAuthenticated
 )
 from rest_framework.generics import (
-    CreateAPIView, ListAPIView, RetrieveUpdateDestroyAPIView,
+    CreateAPIView, ListAPIView, RetrieveUpdateDestroyAPIView, UpdateAPIView
 )
 from .serializers import (
-    UserSerializer, UserRegisterSerializer
+    UserSerializer, UserRegisterSerializer, UserPasswordSerializer
 )
 from .models import User
 from .permissions import UpdateOwnProfile
@@ -22,6 +22,10 @@ class UserRegisterAPIView(CreateAPIView):
     serializer_class = UserRegisterSerializer
 
     permission_classes = [AllowAny]
+
+    # Take the authentication default off, you don't need to be
+    # authenticated to use this funcionality
+    authentication_classes = ()
 
 
 class UserListAPIView(ListAPIView):
@@ -47,6 +51,18 @@ class UserAPIView(RetrieveUpdateDestroyAPIView):
     """
 
     serializer_class = UserSerializer
+
+    queryset = User.objects.all()
+
+    permission_classes = (IsAuthenticated, UpdateOwnProfile)
+
+
+class UserPasswordAPIView(UpdateAPIView):
+    """
+    Controller that allows a logged-in user to edit your own password.
+    """
+
+    serializer_class = UserPasswordSerializer
 
     queryset = User.objects.all()
 
