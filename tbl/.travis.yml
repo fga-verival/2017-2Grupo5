@@ -18,7 +18,6 @@ before_script:
 
 script:
   - pytest --maxfail=1
-  - pytest --cov=.
 
 # deploy:
 #   provider: heroku
