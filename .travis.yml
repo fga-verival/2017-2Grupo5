@@ -2,17 +2,23 @@ sudo: required
 
 language: python
 
-service:
-  - docker
-
 python:
   - "3.5"
 
-env:
-  - DOCKER_COMPOSE_VERSION=1.4.2
-
 before_install:
-  - docker-compose up -d
+  - apt-get update
+
+install:
+  - apt-get install -y python3-dev
+  - apt-get install -y libpq-dev
+  - apt-get install -y gettext
+
+before_script:
+  - pip3 install -r tbl/requirements.txt
+  - python3 tbl/manage.py makemigrations
+  - python3 tbl/manage.py migrate
+  - django-admin makemessages
+  - django-admin compilemessages
 
 script:
   - pytest
