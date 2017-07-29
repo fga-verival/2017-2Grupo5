@@ -1,16 +1,20 @@
 language: python
 
+# Specify the version of python
 python:
   - "3.5"
 
+# Update the system
 before_install:
   - sudo apt-get update
 
+# Install enviroment dependencies
 install:
   - sudo apt-get install -y python3-dev
   - sudo apt-get install -y libpq-dev
   - sudo apt-get install -y gettext
 
+# Install project dependencies
 before_script:
   - pip3 install -r tbl/requirements.txt
   - python3 tbl/manage.py makemigrations
@@ -18,5 +22,25 @@ before_script:
   - django-admin makemessages
   - django-admin compilemessages
 
+# Run the tests and create a file coverage.xml
 script:
   - pytest
+  - pytest --cov-report xml
+
+# Insert a file coverage.xml into codacy to get coverage
+after_script:
+  - python-codacy-coverage -r coverage.xml
+
+# Deploy application on heroku
+# deploy:
+#   provider: heroku
+#   buildpack: python
+#   api_key:
+#     secure: "8bc51bf6-a0ad-45c6-9d53-18391c2829b1"
+#   app:
+#     master: team-based-learning
+#   run:
+#     - "python3 tbl/manage.py makemigrations"
+#     - "python3 tbl/manage.py migrate"
+#     - "django-admin makemessages"
+#     - "django-admin compilemessages"
