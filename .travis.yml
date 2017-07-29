@@ -42,7 +42,7 @@ deploy:
   provider: heroku
   buildpack: python
   api_key:
-    secure: "8bc51bf6-a0ad-45c6-9d53-18391c2829b1"
+    secure: API_HEROKU
   app:
     master: team-based-learning
   run:
