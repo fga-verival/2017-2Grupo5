@@ -59,6 +59,10 @@ up:
 	# Create and start containers
 	sudo docker-compose up -d
 
+build:
+	# Rebuild the docker compose
+	sudo docker-compose build
+
 images:
 	# List images
 	sudo docker-compose images
@@ -90,3 +94,7 @@ logs:
 help:
 	# Help of docker-compose commands
 	sudo docker-compose help
+
+exec:
+	# Get in the bash of tlb container
+	sudo docker exec -it tbl bash
