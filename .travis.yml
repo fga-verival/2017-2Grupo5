@@ -27,6 +27,11 @@ before_script:
   - django-admin makemessages
   - django-admin compilemessages
 
-# Run the tests
+# Run the tests and create coverage.xml
 script:
   - pytest
+  - pytest --cov-report xml --cov=.
+
+# Insert a file coverage.xml into codacy to get coverage
+after_script:
+  - python-codacy-coverage -r coverage.xml
