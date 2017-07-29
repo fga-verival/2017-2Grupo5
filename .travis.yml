@@ -3,7 +3,6 @@ language: python
 # Specify the version of python
 python:
   - "3.5"
-  - "3.6"
 
 branches:
   only:
@@ -36,17 +35,3 @@ script:
 # Insert a file coverage.xml into codacy to get coverage
 after_script:
   - python-codacy-coverage -r coverage.xml
-
-# Deploy application on heroku
-deploy:
-  provider: heroku
-  buildpack: python
-  api_key:
-    secure: API_HEROKU
-  app:
-    master: team-based-learning
-  run:
-    - "python3 tbl/manage.py makemigrations"
-    - "python3 tbl/manage.py migrate"
-    - "django-admin makemessages"
-    - "django-admin compilemessages"
