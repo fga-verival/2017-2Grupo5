@@ -10,8 +10,10 @@ Vagrant.configure("2") do |config|
     # Create a private network IP
     config.vm.network "private_network", ip: "192.168.33.10"
 
-    # Mapping ports to localhost 8080
+    # Mapping ports to localhost 8080 to deploy
     config.vm.network :forwarded_port, host_ip: "127.0.0.1", guest: 8080, host: 8080
+    # Mapping ports to localhost 8000 to dev
+    config.vm.network :forwarded_port, host_ip: "127.0.0.1", guest: 8000, host: 8000
 
     # Syncronize current folder with vangrant folder
     config.vm.synced_folder ".", "/home/vagrant"

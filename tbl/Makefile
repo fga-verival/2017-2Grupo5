@@ -1,7 +1,18 @@
+# INSTALL --------------------------------------
+install:
+	# Create dev enviroment
+	mkvirtualenv dev
+	pip3 install -r requeriments-dev.txt
+	python3 manage.py makemigrations
+	python3 manage.py migrate
+	django-admin makemessages
+	django-admin compilemessages
+
+
 # SERVER ---------------------------------------
 run:
 	# Run the development server
-	python3 manage.py runserver_plus 0.0.0.0:8080
+	python3 manage.py runserver_plus 0.0.0.0:8000
 
 # DATABASE -------------------------------------
 
