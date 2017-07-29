@@ -12,6 +12,6 @@ services:
       - SECRET_KEY='n=38@=sss#wz02i6j^%edl3-0n^=5l%^d(t=q^a088hi816-f0'
     # Forwards the exposed port 8080 on the host machine to port 8080 on the container.
     ports:
-      - '8080:8080'
+      - '5050:5050'
     # command to execute inside the docker
-    command: ['python3', 'tbl/manage.py', 'runserver', '0.0.0.0:8080']
+    command: ['python3', 'tbl/manage.py', 'runserver', '0.0.0.0:5050']
