@@ -1,3 +1,4 @@
+# DEVELOPMENT ENVIRONMENT
 # The last version of vagrant configuration
 Vagrant.configure("2") do |config|
 
@@ -10,10 +11,8 @@ Vagrant.configure("2") do |config|
     # Create a private network IP
     config.vm.network "private_network", ip: "192.168.33.10"
 
-    # Mapping ports to localhost 8080 to deploy
+    # Mapping ports from vagrant 8080 to localhost 8080
     config.vm.network :forwarded_port, host_ip: "127.0.0.1", guest: 8080, host: 8080
-    # Mapping ports to localhost 8000 to dev
-    config.vm.network :forwarded_port, host_ip: "127.0.0.1", guest: 8000, host: 8000
 
     # Syncronize current folder with vangrant folder
     config.vm.synced_folder ".", "/home/vagrant"
@@ -31,12 +30,9 @@ Vagrant.configure("2") do |config|
       # Install Dependecies
       sudo apt-get install -y python3-dev sqlite python3-pip libpq-dev
       sudo apt-get install -y gettext
-      sudo apt-get -y install docker.io
 
       # Upgrade pip to the lastest version
       sudo pip3 install --upgrade pip
-      # Install docker-compose
-      sudo pip3 install docker-compose
 
       # Install and configure python virtualenvwrapper.
       sudo pip3 install virtualenvwrapper

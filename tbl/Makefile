@@ -67,7 +67,7 @@ sendcoverage:
 	pytest --cov-report xml --cov=.
 	python-codacy-coverage -r coverage.xml
 
-# DOCKER --------------------------------------
+# DOCKER DEPLOY ---------------------------------
 
 up:
 	# Create and start containers
