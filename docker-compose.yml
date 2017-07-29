@@ -1,13 +1,17 @@
 version: '2'
 services:
-
   tbl:
-    # Uses an image that's built from the Dockerfile in the current directory
+    # Uses an image that's built from the Dockerfile in the dockers directory
     build: .
-    # Mounts the project directory on the host to /tbl inside the container, allowing you
-    # to modify the code without having to rebuild the image
-    volumes:
-      - .:/tbl
-    # Forwards the exposed port 8080 on the container to port 8080 on the host machine.
+    # Name the image and insert a version
+    image: tbl_image:2.0
+    # Specify a custom container name.
+    container_name: tbl
+    # Set the secret_key to enviroment
+    environment:
+      - SECRET_KEY='n=38@=sss#wz02i6j^%edl3-0n^=5l%^d(t=q^a088hi816-f0'
+    # Forwards the exposed port 8080 on the host machine to port 8080 on the container.
     ports:
       - '8080:8080'
+    # command to execute inside the docker
+    command: ['python3', 'tbl/manage.py', 'runserver', '0.0.0.0:8080']

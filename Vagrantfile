@@ -26,11 +26,15 @@ Vagrant.configure("2") do |config|
       sudo locale-gen en_GB.UTF-8
       sudo locale-gen pt_BR.UTF-8
 
-      # Install Python, SQLite and pip
-      sudo apt-get install -y python3-dev sqlite python3-pip, libpq-dev
+      # Install Dependecies
+      sudo apt-get install -y python3-dev sqlite python3-pip libpq-dev
+      sudo apt-get install -y gettext
+      sudo apt-get -y install docker.io
 
       # Upgrade pip to the lastest version
       sudo pip3 install --upgrade pip
+      # Install docker-compose
+      sudo pip3 install docker-compose
 
       # Install and configure python virtualenvwrapper.
       sudo pip3 install virtualenvwrapper

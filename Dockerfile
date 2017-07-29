@@ -13,11 +13,10 @@ RUN apt-get -y upgrade
 
 # Install dependecies
 RUN apt-get install -y python3-dev \
-    sqlite \
     python3-pip \
-    libpq-dev
+    libpq-dev \
+    gettext \
+    git-core \
+    openssl
 RUN pip3 install --upgrade pip
 RUN pip3 install -r tbl/requirements.txt
-
-# Run the server
-CMD ["python3", "tbl/manage.py", "runserver", "0.0.0.0:8080"]

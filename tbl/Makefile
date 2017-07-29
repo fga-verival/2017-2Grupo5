@@ -1,6 +1,9 @@
+# SERVER ---------------------------------------
 run:
 	# Run the development server
 	python3 manage.py runserver_plus 0.0.0.0:8080
+
+# DATABASE -------------------------------------
 
 migrations:
 	# Create all migrations from models
@@ -14,6 +17,8 @@ superuser:
 	# Create a super user on system.
 	python3 manage.py createsuperuser
 
+# SHELL ---------------------------------------
+
 shell:
 	# Run iteractive shell of project.
 	python3 manage.py shell_plus
@@ -22,13 +27,17 @@ notebook:
 	# Run iteractive shell notebook of project
 	python3 manage.py shell_plus --notebook
 
+# TRANSLATION ---------------------------------
+
 makemessages:
-	# Create a django.po to insert translations (pt-br)
+	# Create a django.po to insert translations (pt-BR)
 	django-admin makemessages -l pt_BR
 
 compilemessages:
 	# Create translations
 	django-admin compilemessages
+
+# TESTS ---------------------------------------
 
 test:
 	# Stop execution of tests when the second test fail
@@ -43,3 +52,41 @@ sendcoverage:
 	# export CODACY_PROJECT_TOKEN=<PROJECT API TOKEN>
 	pytest --cov-report xml --cov=.
 	python-codacy-coverage -r coverage.xml
+
+# DOCKER --------------------------------------
+
+up:
+	# Create and start containers
+	sudo docker-compose up -d
+
+images:
+	# List images
+	sudo docker-compose images
+
+ps:
+	# List all containers
+	sudo docker-compose ps
+
+top:
+	# List running processes
+	sudo docker-compose top
+
+restart:
+	# Restart services
+	sudo docker-compose restart
+
+start:
+	# Start services
+	sudo docker-compose start
+
+stop:
+	# Stop services
+	sudo docker-compose stop
+
+logs:
+	# View output from containers
+	sudo docker-compose logs
+
+help:
+	# Help of docker-compose commands
+	sudo docker-compose help

@@ -20,10 +20,11 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
+# Make this unique, and don't share it with anybody.
 SECRET_KEY = os.getenv('SECRET_KEY', 'SECRET_KEY_DEFAULT')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-# Allow all domains to access this aplication
+# Allow all host/domain to access this aplication
 ALLOWED_HOSTS = ['*']
 
 
@@ -77,6 +78,7 @@ TEMPLATES = [
 
 
 # WSGI
+# Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'tbl.wsgi.application'
 
 
@@ -84,7 +86,9 @@ WSGI_APPLICATION = 'tbl.wsgi.application'
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 DATABASES = {
     'default': {
+        # Add 'postgresql_psycopg2' or 'mysql' or 'sqlite3' or 'oracle'
         'ENGINE': 'django.db.backends.sqlite3',
+        # Path to database file
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
@@ -97,6 +101,7 @@ AUTH_USER_MODEL = 'accounts.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
+# They are validators of passwords to create strong password in the system
 password_validation = 'django.contrib.auth.password_validation'
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -122,20 +127,46 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 LANGUAGES = (
-    ('en', u'English'),
-    ('pt-br', u'Português'),
+    ('en-us', u'English'),
+    ('pt-BR', u'Português'),
 )
-LANGUAGE_CODE = 'pt-br'
+# Language code for this installation. All choices can be found here:
+# http://www.i18nguy.com/unicode/language-identifiers.html
+LANGUAGE_CODE = 'pt-BR'
+# Local time zone for this installation. Choices can be found here:
+# http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
+# although not all choices may be available on all operating systems.
+# In a Windows environment this must be set to your system time zone.
 TIME_ZONE = 'UTC'
+# If you set this to False, Django will make some optimizations so as not
+# to load the internationalization machinery.
 USE_I18N = True
+# If you set this to False, Django will not format dates, numbers and
+# calendars according to the current locale.
 USE_L10N = True
+# If you set this to False, Django will not use timezone-aware datetimes.
 USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+
+# Absolute path to the directory static files should be collected to.
+# Don't put anything in this directory yourself; store your static files
+# in apps' "static/" subdirectories and in STATICFILES_DIRS.
+# Example: "/var/www/example.com/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# URL prefix for static files.
+# Example: "http://example.com/static/", "http://static.example.com/"
 STATIC_URL = '/static/'
+
+# Absolute filesystem path to the directory that will hold user-uploaded files.
+# Example: "/var/www/example.com/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# URL that handles the media served from MEDIA_ROOT. Make sure to use a
+# trailing slash.
+# Examples: "http://example.com/media/", "http://media.example.com/"
+MEDIA_URL = '/media/'
 
 # Django Rest Framework
 # http://www.django-rest-framework.org/
