@@ -1,17 +1,15 @@
-sudo: required
-
 language: python
 
 python:
   - "3.5"
 
 before_install:
-  - apt-get update
+  - sudo apt-get update
 
 install:
-  - apt-get install -y python3-dev
-  - apt-get install -y libpq-dev
-  - apt-get install -y gettext
+  - sudo apt-get install -y python3-dev
+  - sudo apt-get install -y libpq-dev
+  - sudo apt-get install -y gettext
 
 before_script:
   - pip3 install -r tbl/requirements.txt
