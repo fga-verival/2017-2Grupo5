@@ -1,20 +1,18 @@
+sudo: required
+
 language: python
+
+service:
+  - docker
 
 python:
   - "3.5"
 
+env:
+  - DOCKER_COMPOSE_VERSION=1.4.2
+
 before_install:
-  - sudo apt-get update
-  - sudo apt-get install -y python3-dev
-  - sudo apt-get install -y libpq-dev
-  - sudo apt-get install -y gettext
-
-install:
-  - pip3 install -r tbl/requirements.txt
-
-before_script:
-  - python3 tbl/manage.py makemigrations
-  - python3 tbl/manage.py migrate
+  - docker-compose up -d
 
 script:
-  - python3 tbl/manage.py test
+  - pytest
