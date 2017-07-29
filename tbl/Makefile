@@ -8,6 +8,9 @@ install:
 	django-admin makemessages
 	django-admin compilemessages
 
+dev:
+	# Get in on dev enviroment
+	workon dev
 
 # SERVER ---------------------------------------
 run:
