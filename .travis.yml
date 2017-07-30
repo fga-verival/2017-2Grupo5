@@ -24,6 +24,7 @@ before_script:
   - pip3 install -r tbl/requirements.txt
   - python3 tbl/manage.py makemigrations
   - python3 tbl/manage.py migrate
+  - mkdir tbl/locale
   - django-admin makemessages
   - django-admin compilemessages
 
