@@ -6,13 +6,8 @@ app_name = 'accounts'
 urlpatterns = [
     url(
         r'^$',
-        views.UserListAPIView.as_view(),
-        name='list'
-    ),
-    url(
-        r'^register/$',
-        views.UserRegisterAPIView.as_view(),
-        name='register'
+        views.UserListCreateAPIView.as_view(),
+        name='list-create'
     ),
     url(
         r'^(?P<pk>[0-9]+)/$',

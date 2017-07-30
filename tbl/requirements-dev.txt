@@ -57,3 +57,4 @@ webencodings==0.5.1
 Werkzeug==0.12.2
 whitenoise==3.3.0
 widgetsnbextension==2.0.0
+django-taggit-0.22.1

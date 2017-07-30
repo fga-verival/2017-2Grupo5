@@ -2,7 +2,7 @@ from rest_framework.test import APITestCase
 from accounts.models import User
 
 
-class LoginTestCase(APITestCase):
+class UserTestCase(APITestCase):
     """
     Unit test case to test user features.
     """
@@ -31,7 +31,10 @@ class LoginTestCase(APITestCase):
             name='Jose da Silva Pereira',
             email='jose@gmail.com',
             is_teacher=True,
-            password='jose123456'
+            password='jose123456',
+            institution='UnB',
+            course='Software Engineering',
+            photo='img/photo01.png'
         )
 
     def tearDown(self):
@@ -49,20 +52,20 @@ class LoginTestCase(APITestCase):
         Test to get the full name of user
         """
 
-        self.assertEquals(self.superuser.full_name, self.superuser.name)
-        self.assertEquals(self.user1.full_name, self.user1.name)
-        self.assertEquals(self.user2.full_name, self.user2.name)
-        self.assertEquals(self.user3.full_name, self.user3.name)
+        self.assertEquals(self.superuser.get_full_name(), self.superuser.name)
+        self.assertEquals(self.user1.get_full_name(), self.user1.name)
+        self.assertEquals(self.user2.get_full_name(), self.user2.name)
+        self.assertEquals(self.user3.get_full_name(), self.user3.name)
 
     def test_short_name(self):
         """
         Test to get the short name of user, the first name with the last name
         """
 
-        self.assertEquals(self.superuser.short_name, 'Victor Arnaud')
-        self.assertEquals(self.user1.short_name, self.user1.name)
-        self.assertEquals(self.user2.short_name, 'Maria Fatima')
-        self.assertEquals(self.user3.short_name, 'Jose Pereira')
+        self.assertEquals(self.superuser.get_short_name(), 'Victor Arnaud')
+        self.assertEquals(self.user1.get_short_name(), self.user1.name)
+        self.assertEquals(self.user2.get_short_name(), 'Maria Fatima')
+        self.assertEquals(self.user3.get_short_name(), 'Jose Pereira')
 
     def test_is_teacher_or_students(self):
         """

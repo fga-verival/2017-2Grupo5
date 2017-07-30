@@ -1,6 +1,6 @@
 from django.utils.translation import ugettext_lazy as _
 from rest_framework.serializers import (
-    ModelSerializer, CharField, ValidationError
+    ModelSerializer, CharField, DateTimeField, ValidationError
 )
 from .models import User
 
@@ -77,11 +77,17 @@ class UserRegisterSerializer(ModelSerializer):
         style={'input_type': 'password'}
     )
 
+    last_login = DateTimeField(
+        read_only=True
+    )
+
     class Meta:
         model = User
-        fields = [
-            'name', 'email', 'is_teacher', 'password', 'confirm_password'
-        ]
+        fields = (
+            'id', 'name', 'email', 'institution', 'course', 'photo',
+            'is_teacher', 'last_login', 'created_at', 'updated_at',
+            'password', 'confirm_password'
+        )
 
     @staticmethod
     def validate(data):

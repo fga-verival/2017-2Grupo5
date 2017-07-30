@@ -153,16 +153,14 @@ class User(AbstractBaseUser, PermissionsMixin):
 
         return self.email
 
-    @property
-    def full_name(self):
+    def get_full_name(self):
         """
         Used to get the user full name.
         """
 
         return self.name
 
-    @property
-    def short_name(self):
+    def get_short_name(self):
         """
         Used to get the user short name.
         """
@@ -170,7 +168,11 @@ class User(AbstractBaseUser, PermissionsMixin):
         FIRST_NAME = 0
 
         if len(self.name.split(" ")) >= 2:
-            return str(self.name.split(" ")[FIRST_NAME] + " " + self.name.split(" ")[LAST_NAME])
+            return str(
+                self.name.split(" ")[FIRST_NAME] +
+                " " +
+                self.name.split(" ")[LAST_NAME]
+            )
         else:
             return str(self.name)
 

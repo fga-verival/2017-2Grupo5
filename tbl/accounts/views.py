@@ -1,47 +1,30 @@
-from rest_framework.filters import (
-    SearchFilter, OrderingFilter
-)
-from rest_framework.permissions import (
-    AllowAny, IsAuthenticated
-)
+from rest_framework.filters import SearchFilter, OrderingFilter
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.generics import (
-    CreateAPIView, ListAPIView, RetrieveUpdateDestroyAPIView, UpdateAPIView
+    RetrieveUpdateDestroyAPIView, UpdateAPIView, ListCreateAPIView
 )
 from .serializers import (
     UserSerializer, UserRegisterSerializer, UserPasswordSerializer
 )
 from .models import User
-from .permissions import UpdateOwnProfile
+from .permissions import UpdateOwnProfile, CreateListUserPermission
 
 
-class UserRegisterAPIView(CreateAPIView):
+class UserListCreateAPIView(ListCreateAPIView):
     """
-    Controller that allows any user to register to the system.
+    Controller that allows any logged user see all users and only not
+    logged user and admin user to create user.
     """
 
     serializer_class = UserRegisterSerializer
 
-    permission_classes = [AllowAny]
-
-    # Take the authentication default off, you don't need to be
-    # authenticated to use this funcionality
-    authentication_classes = ()
-
-
-class UserListAPIView(ListAPIView):
-    """
-    Controller that allows any logged user see all users.
-    """
-
-    serializer_class = UserSerializer
-
     queryset = User.objects.all()
 
-    permission_classes = [IsAuthenticated]
+    permission_classes = [CreateListUserPermission]
 
     filter_backends = (SearchFilter, OrderingFilter)
     search_fields = ('name', 'email')
-    ordering_fields = ('email', )
+    ordering_fields = ('email', 'institution')
 
 
 class UserAPIView(RetrieveUpdateDestroyAPIView):

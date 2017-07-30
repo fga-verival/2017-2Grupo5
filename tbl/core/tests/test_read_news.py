@@ -2,12 +2,13 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 from accounts.models import User
-from accounts.serializers import UserSerializer, UserRegisterSerializer
+from core.models import News
+from core.serializers import NewsSerializer
 
 
-class ReadUserTestCase(APITestCase):
+class ReadNewsTestCase(APITestCase):
     """
-    Test to show all or a single user of the system.
+    Test to show all news or a single news.
     """
 
     def setUp(self):
@@ -25,7 +26,10 @@ class ReadUserTestCase(APITestCase):
             email='pedro@gmail.com',
             password='pedro123456'
         )
-        self.client.force_authenticate(self.user)
+        self.news = News.objects.create(
+            title='News',
+            description='News description...'
+        )
 
     def tearDown(self):
         """
@@ -35,47 +39,37 @@ class ReadUserTestCase(APITestCase):
         self.superuser.delete()
         self.client.logout()
         self.user.delete()
+        self.news.delete()
 
-    def test_valid_user_list(self):
+    def test_valid_news_list(self):
         """
         Test found the user list.
         """
 
-        users = User.objects.all()
-        serializer = UserRegisterSerializer(users, many=True)
-        url = reverse('accounts:list-create')
+        news = News.objects.all()
+        serializer = NewsSerializer(news, many=True)
+        url = reverse('news:list-create')
         response = self.client.get(url)
-        self.assertEquals(User.objects.count(), 2)
+        self.assertEquals(News.objects.count(), 1)
         self.assertEquals(response.data, serializer.data)
         self.assertEquals(response.status_code, status.HTTP_200_OK)
 
-    def test_valid_own_user_detail(self):
+    def test_valid_news_detail(self):
         """
-        Test found the own user.
-        """
-
-        url = reverse('accounts:details', kwargs={'pk': self.user.pk})
-        serializer = UserSerializer(self.user)
-        response = self.client.get(url)
-        self.assertEquals(response.data, serializer.data)
-        self.assertEquals(response.status_code, status.HTTP_200_OK)
-
-    def test_valid_another_user_detail(self):
-        """
-        Test found the specific user.
+        Test found the specific news.
         """
 
-        url = reverse('accounts:details', kwargs={'pk': self.superuser.pk})
-        serializer = UserSerializer(self.superuser)
+        url = reverse('news:keep-news', kwargs={'pk': self.news.pk})
+        serializer = NewsSerializer(self.news)
         response = self.client.get(url)
         self.assertEquals(response.data, serializer.data)
         self.assertEquals(response.status_code, status.HTTP_200_OK)
 
-    def test_invalid_url_user_detail(self):
+    def test_invalid_url_news_detail(self):
         """
-        Test to not found the specific user.
+        Test to not found the specific news.
         """
 
-        url_invalid = reverse('accounts:details', kwargs={'pk': 30})
+        url_invalid = reverse('news:keep-news', kwargs={'pk': 30})
         response = self.client.get(url_invalid)
         self.assertEquals(response.status_code, status.HTTP_404_NOT_FOUND)

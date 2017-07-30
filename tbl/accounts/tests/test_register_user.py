@@ -25,7 +25,7 @@ class CreateUserTestCase(APITestCase):
             email='pedro@gmail.com',
             password='pedro123456'
         )
-        self.url = reverse('accounts:register')
+        self.url = reverse('accounts:list-create')
 
     def tearDown(self):
         """
@@ -74,7 +74,7 @@ class CreateUserTestCase(APITestCase):
 
     def test_invalid_email_create_user(self):
         """
-        Can't create a new user in the system, bacause of invalid email.
+        Can't create a new user in the system, because of invalid email.
         """
 
         self.assertEquals(User.objects.count(), 2)

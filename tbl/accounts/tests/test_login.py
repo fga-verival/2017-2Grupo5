@@ -26,7 +26,7 @@ class LoginTestCase(APITestCase):
             email='pedro@gmail.com',
             password='pedro123456'
         )
-        self.url = reverse('accounts:list')
+        self.url = reverse('accounts:details', kwargs={'pk': self.user.pk})
 
     def tearDown(self):
         """

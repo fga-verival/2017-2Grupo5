@@ -1,7 +1,7 @@
 # INSTALL --------------------------------------
 install:
-	# Create dev enviroment
-	mkvirtualenv dev
+	# Create tbl enviroment
+	mkvirtualenv tbl
 	pip3 install -r requeriments-dev.txt
 	python3 manage.py makemigrations
 	python3 manage.py migrate
@@ -12,10 +12,15 @@ dev:
 	# Get in on dev enviroment
 	workon dev
 
+clean:
+	# Search and clean all files .pyc and .pyo in __pycache__ directories
+	# Run it before run make test
+	find . | grep -E "(\.pyc|\.pyo)" | xargs rm -rf
+
 # SERVER ---------------------------------------
 run:
 	# Run the development server
-	python3 manage.py runserver_plus 0.0.0.0:8000
+	python3 manage.py runserver_plus 0.0.0.0:8080
 
 # DATABASE -------------------------------------
 
@@ -51,10 +56,17 @@ compilemessages:
 	# Create translations
 	django-admin compilemessages
 
+# STATIC FILES --------------------------------
+
+staticfiles:
+	# Collect all static files
+	python3 manage.py collectstatic
+
 # TESTS ---------------------------------------
 
 test:
 	# Stop execution of tests when the second test fail
+	# Run make clean before it
 	pytest --maxfail=1
 
 coverage:
@@ -104,6 +116,10 @@ stop:
 logs:
 	# View output from containers
 	sudo docker-compose logs
+
+rm:
+	# Remove all containers not running
+	sudo docker-compose rm
 
 help:
 	# Help of docker-compose commands
