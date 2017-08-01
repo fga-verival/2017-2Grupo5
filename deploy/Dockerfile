@@ -31,4 +31,4 @@ RUN django-admin compilemessages
 RUN cp /software/deploy/nginx_tbl.conf /etc/nginx/sites-available/nginx_tbl.conf
 RUN rm /etc/nginx/sites-enabled/default
 RUN ln -s /etc/nginx/sites-available/nginx_tbl.conf /etc/nginx/sites-enabled/nginx_tbl.conf
-systemctl restart nginx.service
+RUN systemctl restart nginx.service
