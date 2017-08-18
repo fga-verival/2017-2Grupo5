@@ -21,7 +21,8 @@ env:
 
 # Install project dependencies
 install:
-  - docker run tbl_image:2.0
+  - docker build -t ubuntu/tbl .
+  - docker run -d ubuntu/tbl
   # - docker-compose up -d
 
 # Run the tests and create coverage.xml
