@@ -21,7 +21,8 @@ env:
 
 # Install project dependencies
 install:
-  - docker-compose up -d
+  - docker run tbl_image:2.0
+  # - docker-compose up -d
 
 # Run the tests and create coverage.xml
 script:

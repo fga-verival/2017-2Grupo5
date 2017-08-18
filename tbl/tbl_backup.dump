@@ -1,0 +1,1238 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.5.8
+-- Dumped by pg_dump version 9.5.8
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: accounts_user; Type: TABLE; Schema: public; Owner: victor
+--
+
+CREATE TABLE accounts_user (
+    id integer NOT NULL,
+    password character varying(128) NOT NULL,
+    is_superuser boolean NOT NULL,
+    email character varying(254) NOT NULL,
+    name character varying(150) NOT NULL,
+    institution character varying(100) NOT NULL,
+    photo character varying(100),
+    is_active boolean NOT NULL,
+    is_staff boolean NOT NULL,
+    last_login timestamp with time zone,
+    created_at timestamp with time zone NOT NULL,
+    updated_at timestamp with time zone NOT NULL,
+    course character varying(100) NOT NULL,
+    is_teacher boolean NOT NULL
+);
+
+
+ALTER TABLE accounts_user OWNER TO victor;
+
+--
+-- Name: accounts_user_groups; Type: TABLE; Schema: public; Owner: victor
+--
+
+CREATE TABLE accounts_user_groups (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    group_id integer NOT NULL
+);
+
+
+ALTER TABLE accounts_user_groups OWNER TO victor;
+
+--
+-- Name: accounts_user_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: victor
+--
+
+CREATE SEQUENCE accounts_user_groups_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE accounts_user_groups_id_seq OWNER TO victor;
+
+--
+-- Name: accounts_user_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: victor
+--
+
+ALTER SEQUENCE accounts_user_groups_id_seq OWNED BY accounts_user_groups.id;
+
+
+--
+-- Name: accounts_user_id_seq; Type: SEQUENCE; Schema: public; Owner: victor
+--
+
+CREATE SEQUENCE accounts_user_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE accounts_user_id_seq OWNER TO victor;
+
+--
+-- Name: accounts_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: victor
+--
+
+ALTER SEQUENCE accounts_user_id_seq OWNED BY accounts_user.id;
+
+
+--
+-- Name: accounts_user_user_permissions; Type: TABLE; Schema: public; Owner: victor
+--
+
+CREATE TABLE accounts_user_user_permissions (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+ALTER TABLE accounts_user_user_permissions OWNER TO victor;
+
+--
+-- Name: accounts_user_user_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: victor
+--
+
+CREATE SEQUENCE accounts_user_user_permissions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE accounts_user_user_permissions_id_seq OWNER TO victor;
+
+--
+-- Name: accounts_user_user_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: victor
+--
+
+ALTER SEQUENCE accounts_user_user_permissions_id_seq OWNED BY accounts_user_user_permissions.id;
+
+
+--
+-- Name: auth_group; Type: TABLE; Schema: public; Owner: victor
+--
+
+CREATE TABLE auth_group (
+    id integer NOT NULL,
+    name character varying(80) NOT NULL
+);
+
+
+ALTER TABLE auth_group OWNER TO victor;
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE; Schema: public; Owner: victor
+--
+
+CREATE SEQUENCE auth_group_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE auth_group_id_seq OWNER TO victor;
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: victor
+--
+
+ALTER SEQUENCE auth_group_id_seq OWNED BY auth_group.id;
+
+
+--
+-- Name: auth_group_permissions; Type: TABLE; Schema: public; Owner: victor
+--
+
+CREATE TABLE auth_group_permissions (
+    id integer NOT NULL,
+    group_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+ALTER TABLE auth_group_permissions OWNER TO victor;
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: victor
+--
+
+CREATE SEQUENCE auth_group_permissions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE auth_group_permissions_id_seq OWNER TO victor;
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: victor
+--
+
+ALTER SEQUENCE auth_group_permissions_id_seq OWNED BY auth_group_permissions.id;
+
+
+--
+-- Name: auth_permission; Type: TABLE; Schema: public; Owner: victor
+--
+
+CREATE TABLE auth_permission (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    content_type_id integer NOT NULL,
+    codename character varying(100) NOT NULL
+);
+
+
+ALTER TABLE auth_permission OWNER TO victor;
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE; Schema: public; Owner: victor
+--
+
+CREATE SEQUENCE auth_permission_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE auth_permission_id_seq OWNER TO victor;
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: victor
+--
+
+ALTER SEQUENCE auth_permission_id_seq OWNED BY auth_permission.id;
+
+
+--
+-- Name: authtoken_token; Type: TABLE; Schema: public; Owner: victor
+--
+
+CREATE TABLE authtoken_token (
+    key character varying(40) NOT NULL,
+    created timestamp with time zone NOT NULL,
+    user_id integer NOT NULL
+);
+
+
+ALTER TABLE authtoken_token OWNER TO victor;
+
+--
+-- Name: core_news; Type: TABLE; Schema: public; Owner: victor
+--
+
+CREATE TABLE core_news (
+    id integer NOT NULL,
+    title character varying(100) NOT NULL,
+    image character varying(100),
+    created_at timestamp with time zone NOT NULL,
+    link character varying(200),
+    description text NOT NULL
+);
+
+
+ALTER TABLE core_news OWNER TO victor;
+
+--
+-- Name: core_news_id_seq; Type: SEQUENCE; Schema: public; Owner: victor
+--
+
+CREATE SEQUENCE core_news_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE core_news_id_seq OWNER TO victor;
+
+--
+-- Name: core_news_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: victor
+--
+
+ALTER SEQUENCE core_news_id_seq OWNED BY core_news.id;
+
+
+--
+-- Name: core_news_tags; Type: TABLE; Schema: public; Owner: victor
+--
+
+CREATE TABLE core_news_tags (
+    id integer NOT NULL,
+    news_id integer NOT NULL,
+    tag_id integer NOT NULL
+);
+
+
+ALTER TABLE core_news_tags OWNER TO victor;
+
+--
+-- Name: core_news_tags_id_seq; Type: SEQUENCE; Schema: public; Owner: victor
+--
+
+CREATE SEQUENCE core_news_tags_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE core_news_tags_id_seq OWNER TO victor;
+
+--
+-- Name: core_news_tags_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: victor
+--
+
+ALTER SEQUENCE core_news_tags_id_seq OWNED BY core_news_tags.id;
+
+
+--
+-- Name: core_tag; Type: TABLE; Schema: public; Owner: victor
+--
+
+CREATE TABLE core_tag (
+    id integer NOT NULL,
+    title character varying(20) NOT NULL
+);
+
+
+ALTER TABLE core_tag OWNER TO victor;
+
+--
+-- Name: core_tag_id_seq; Type: SEQUENCE; Schema: public; Owner: victor
+--
+
+CREATE SEQUENCE core_tag_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE core_tag_id_seq OWNER TO victor;
+
+--
+-- Name: core_tag_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: victor
+--
+
+ALTER SEQUENCE core_tag_id_seq OWNED BY core_tag.id;
+
+
+--
+-- Name: django_admin_log; Type: TABLE; Schema: public; Owner: victor
+--
+
+CREATE TABLE django_admin_log (
+    id integer NOT NULL,
+    action_time timestamp with time zone NOT NULL,
+    object_id text,
+    object_repr character varying(200) NOT NULL,
+    action_flag smallint NOT NULL,
+    change_message text NOT NULL,
+    content_type_id integer,
+    user_id integer NOT NULL,
+    CONSTRAINT django_admin_log_action_flag_check CHECK ((action_flag >= 0))
+);
+
+
+ALTER TABLE django_admin_log OWNER TO victor;
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE; Schema: public; Owner: victor
+--
+
+CREATE SEQUENCE django_admin_log_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE django_admin_log_id_seq OWNER TO victor;
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: victor
+--
+
+ALTER SEQUENCE django_admin_log_id_seq OWNED BY django_admin_log.id;
+
+
+--
+-- Name: django_content_type; Type: TABLE; Schema: public; Owner: victor
+--
+
+CREATE TABLE django_content_type (
+    id integer NOT NULL,
+    app_label character varying(100) NOT NULL,
+    model character varying(100) NOT NULL
+);
+
+
+ALTER TABLE django_content_type OWNER TO victor;
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE; Schema: public; Owner: victor
+--
+
+CREATE SEQUENCE django_content_type_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE django_content_type_id_seq OWNER TO victor;
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: victor
+--
+
+ALTER SEQUENCE django_content_type_id_seq OWNED BY django_content_type.id;
+
+
+--
+-- Name: django_migrations; Type: TABLE; Schema: public; Owner: victor
+--
+
+CREATE TABLE django_migrations (
+    id integer NOT NULL,
+    app character varying(255) NOT NULL,
+    name character varying(255) NOT NULL,
+    applied timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE django_migrations OWNER TO victor;
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: victor
+--
+
+CREATE SEQUENCE django_migrations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE django_migrations_id_seq OWNER TO victor;
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: victor
+--
+
+ALTER SEQUENCE django_migrations_id_seq OWNED BY django_migrations.id;
+
+
+--
+-- Name: django_session; Type: TABLE; Schema: public; Owner: victor
+--
+
+CREATE TABLE django_session (
+    session_key character varying(40) NOT NULL,
+    session_data text NOT NULL,
+    expire_date timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE django_session OWNER TO victor;
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY accounts_user ALTER COLUMN id SET DEFAULT nextval('accounts_user_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY accounts_user_groups ALTER COLUMN id SET DEFAULT nextval('accounts_user_groups_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY accounts_user_user_permissions ALTER COLUMN id SET DEFAULT nextval('accounts_user_user_permissions_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY auth_group ALTER COLUMN id SET DEFAULT nextval('auth_group_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY auth_group_permissions ALTER COLUMN id SET DEFAULT nextval('auth_group_permissions_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY auth_permission ALTER COLUMN id SET DEFAULT nextval('auth_permission_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY core_news ALTER COLUMN id SET DEFAULT nextval('core_news_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY core_news_tags ALTER COLUMN id SET DEFAULT nextval('core_news_tags_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY core_tag ALTER COLUMN id SET DEFAULT nextval('core_tag_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY django_admin_log ALTER COLUMN id SET DEFAULT nextval('django_admin_log_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY django_content_type ALTER COLUMN id SET DEFAULT nextval('django_content_type_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY django_migrations ALTER COLUMN id SET DEFAULT nextval('django_migrations_id_seq'::regclass);
+
+
+--
+-- Data for Name: accounts_user; Type: TABLE DATA; Schema: public; Owner: victor
+--
+
+COPY accounts_user (id, password, is_superuser, email, name, institution, photo, is_active, is_staff, last_login, created_at, updated_at, course, is_teacher) FROM stdin;
+1	pbkdf2_sha256$36000$yHV1MVsscGA8$XuZAfIg603nnPKj5Mi3d3/YtKo3eotMVmJ0XCO/F9Rk=	t	victorhad@gmail.com	Victor Arnaud			t	t	\N	2017-08-17 23:40:04.685529-03	2017-08-17 23:40:04.688269-03		f
+\.
+
+
+--
+-- Data for Name: accounts_user_groups; Type: TABLE DATA; Schema: public; Owner: victor
+--
+
+COPY accounts_user_groups (id, user_id, group_id) FROM stdin;
+\.
+
+
+--
+-- Name: accounts_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: victor
+--
+
+SELECT pg_catalog.setval('accounts_user_groups_id_seq', 1, false);
+
+
+--
+-- Name: accounts_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: victor
+--
+
+SELECT pg_catalog.setval('accounts_user_id_seq', 1, true);
+
+
+--
+-- Data for Name: accounts_user_user_permissions; Type: TABLE DATA; Schema: public; Owner: victor
+--
+
+COPY accounts_user_user_permissions (id, user_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- Name: accounts_user_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: victor
+--
+
+SELECT pg_catalog.setval('accounts_user_user_permissions_id_seq', 1, false);
+
+
+--
+-- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: victor
+--
+
+COPY auth_group (id, name) FROM stdin;
+\.
+
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: victor
+--
+
+SELECT pg_catalog.setval('auth_group_id_seq', 1, false);
+
+
+--
+-- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: victor
+--
+
+COPY auth_group_permissions (id, group_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: victor
+--
+
+SELECT pg_catalog.setval('auth_group_permissions_id_seq', 1, false);
+
+
+--
+-- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: victor
+--
+
+COPY auth_permission (id, name, content_type_id, codename) FROM stdin;
+1	Can add log entry	1	add_logentry
+2	Can change log entry	1	change_logentry
+3	Can delete log entry	1	delete_logentry
+4	Can add group	2	add_group
+5	Can change group	2	change_group
+6	Can delete group	2	delete_group
+7	Can add permission	3	add_permission
+8	Can change permission	3	change_permission
+9	Can delete permission	3	delete_permission
+10	Can add content type	4	add_contenttype
+11	Can change content type	4	change_contenttype
+12	Can delete content type	4	delete_contenttype
+13	Can add session	5	add_session
+14	Can change session	5	change_session
+15	Can delete session	5	delete_session
+16	Can add Token	6	add_token
+17	Can change Token	6	change_token
+18	Can delete Token	6	delete_token
+19	Can add User	7	add_user
+20	Can change User	7	change_user
+21	Can delete User	7	delete_user
+22	Can add News	8	add_news
+23	Can change News	8	change_news
+24	Can delete News	8	delete_news
+25	Can add Tag	9	add_tag
+26	Can change Tag	9	change_tag
+27	Can delete Tag	9	delete_tag
+\.
+
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: victor
+--
+
+SELECT pg_catalog.setval('auth_permission_id_seq', 27, true);
+
+
+--
+-- Data for Name: authtoken_token; Type: TABLE DATA; Schema: public; Owner: victor
+--
+
+COPY authtoken_token (key, created, user_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: core_news; Type: TABLE DATA; Schema: public; Owner: victor
+--
+
+COPY core_news (id, title, image, created_at, link, description) FROM stdin;
+\.
+
+
+--
+-- Name: core_news_id_seq; Type: SEQUENCE SET; Schema: public; Owner: victor
+--
+
+SELECT pg_catalog.setval('core_news_id_seq', 1, false);
+
+
+--
+-- Data for Name: core_news_tags; Type: TABLE DATA; Schema: public; Owner: victor
+--
+
+COPY core_news_tags (id, news_id, tag_id) FROM stdin;
+\.
+
+
+--
+-- Name: core_news_tags_id_seq; Type: SEQUENCE SET; Schema: public; Owner: victor
+--
+
+SELECT pg_catalog.setval('core_news_tags_id_seq', 1, false);
+
+
+--
+-- Data for Name: core_tag; Type: TABLE DATA; Schema: public; Owner: victor
+--
+
+COPY core_tag (id, title) FROM stdin;
+\.
+
+
+--
+-- Name: core_tag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: victor
+--
+
+SELECT pg_catalog.setval('core_tag_id_seq', 1, false);
+
+
+--
+-- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: victor
+--
+
+COPY django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
+\.
+
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: victor
+--
+
+SELECT pg_catalog.setval('django_admin_log_id_seq', 1, false);
+
+
+--
+-- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: victor
+--
+
+COPY django_content_type (id, app_label, model) FROM stdin;
+1	admin	logentry
+2	auth	group
+3	auth	permission
+4	contenttypes	contenttype
+5	sessions	session
+6	authtoken	token
+7	accounts	user
+8	core	news
+9	core	tag
+\.
+
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: victor
+--
+
+SELECT pg_catalog.setval('django_content_type_id_seq', 9, true);
+
+
+--
+-- Data for Name: django_migrations; Type: TABLE DATA; Schema: public; Owner: victor
+--
+
+COPY django_migrations (id, app, name, applied) FROM stdin;
+1	contenttypes	0001_initial	2017-08-17 23:39:40.295758-03
+2	contenttypes	0002_remove_content_type_name	2017-08-17 23:39:40.311065-03
+3	auth	0001_initial	2017-08-17 23:39:40.377184-03
+4	auth	0002_alter_permission_name_max_length	2017-08-17 23:39:40.391633-03
+5	auth	0003_alter_user_email_max_length	2017-08-17 23:39:40.404093-03
+6	auth	0004_alter_user_username_opts	2017-08-17 23:39:40.415484-03
+7	auth	0005_alter_user_last_login_null	2017-08-17 23:39:40.425343-03
+8	auth	0006_require_contenttypes_0002	2017-08-17 23:39:40.429411-03
+9	auth	0007_alter_validators_add_error_messages	2017-08-17 23:39:40.439573-03
+10	auth	0008_alter_user_username_max_length	2017-08-17 23:39:40.451185-03
+11	accounts	0001_initial	2017-08-17 23:39:40.51586-03
+12	accounts	0002_auto_20170726_0734	2017-08-17 23:39:40.527104-03
+13	accounts	0003_auto_20170727_0802	2017-08-17 23:39:40.565305-03
+14	accounts	0004_auto_20170727_0807	2017-08-17 23:39:40.579092-03
+15	accounts	0005_user_is_teacher	2017-08-17 23:39:40.60694-03
+16	accounts	0006_auto_20170730_0330	2017-08-17 23:39:40.62333-03
+17	admin	0001_initial	2017-08-17 23:39:40.657295-03
+18	admin	0002_logentry_remove_auto_add	2017-08-17 23:39:40.67911-03
+19	authtoken	0001_initial	2017-08-17 23:39:40.70672-03
+20	authtoken	0002_auto_20160226_1747	2017-08-17 23:39:40.768264-03
+21	core	0001_initial	2017-08-17 23:39:40.788085-03
+22	core	0002_auto_20170730_0351	2017-08-17 23:39:40.823272-03
+23	core	0003_auto_20170730_0523	2017-08-17 23:39:40.849861-03
+24	core	0004_auto_20170730_0528	2017-08-17 23:39:40.874607-03
+25	core	0005_auto_20170730_0528	2017-08-17 23:39:40.897694-03
+26	sessions	0001_initial	2017-08-17 23:39:40.916343-03
+\.
+
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: victor
+--
+
+SELECT pg_catalog.setval('django_migrations_id_seq', 26, true);
+
+
+--
+-- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: victor
+--
+
+COPY django_session (session_key, session_data, expire_date) FROM stdin;
+\.
+
+
+--
+-- Name: accounts_user_email_key; Type: CONSTRAINT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY accounts_user
+    ADD CONSTRAINT accounts_user_email_key UNIQUE (email);
+
+
+--
+-- Name: accounts_user_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY accounts_user_groups
+    ADD CONSTRAINT accounts_user_groups_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: accounts_user_groups_user_id_group_id_59c0b32f_uniq; Type: CONSTRAINT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY accounts_user_groups
+    ADD CONSTRAINT accounts_user_groups_user_id_group_id_59c0b32f_uniq UNIQUE (user_id, group_id);
+
+
+--
+-- Name: accounts_user_pkey; Type: CONSTRAINT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY accounts_user
+    ADD CONSTRAINT accounts_user_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: accounts_user_user_permi_user_id_permission_id_2ab516c2_uniq; Type: CONSTRAINT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY accounts_user_user_permissions
+    ADD CONSTRAINT accounts_user_user_permi_user_id_permission_id_2ab516c2_uniq UNIQUE (user_id, permission_id);
+
+
+--
+-- Name: accounts_user_user_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY accounts_user_user_permissions
+    ADD CONSTRAINT accounts_user_user_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_group_name_key; Type: CONSTRAINT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY auth_group
+    ADD CONSTRAINT auth_group_name_key UNIQUE (name);
+
+
+--
+-- Name: auth_group_permissions_group_id_permission_id_0cd325b0_uniq; Type: CONSTRAINT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_permission_id_0cd325b0_uniq UNIQUE (group_id, permission_id);
+
+
+--
+-- Name: auth_group_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_group_pkey; Type: CONSTRAINT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY auth_group
+    ADD CONSTRAINT auth_group_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_permission_content_type_id_codename_01ab375a_uniq; Type: CONSTRAINT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_codename_01ab375a_uniq UNIQUE (content_type_id, codename);
+
+
+--
+-- Name: auth_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY auth_permission
+    ADD CONSTRAINT auth_permission_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: authtoken_token_pkey; Type: CONSTRAINT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY authtoken_token
+    ADD CONSTRAINT authtoken_token_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: authtoken_token_user_id_key; Type: CONSTRAINT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY authtoken_token
+    ADD CONSTRAINT authtoken_token_user_id_key UNIQUE (user_id);
+
+
+--
+-- Name: core_news_pkey; Type: CONSTRAINT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY core_news
+    ADD CONSTRAINT core_news_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: core_news_tags_news_id_tag_id_799998f0_uniq; Type: CONSTRAINT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY core_news_tags
+    ADD CONSTRAINT core_news_tags_news_id_tag_id_799998f0_uniq UNIQUE (news_id, tag_id);
+
+
+--
+-- Name: core_news_tags_pkey; Type: CONSTRAINT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY core_news_tags
+    ADD CONSTRAINT core_news_tags_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: core_tag_pkey; Type: CONSTRAINT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY core_tag
+    ADD CONSTRAINT core_tag_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_admin_log_pkey; Type: CONSTRAINT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY django_admin_log
+    ADD CONSTRAINT django_admin_log_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_content_type_app_label_model_76bd3d3b_uniq; Type: CONSTRAINT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY django_content_type
+    ADD CONSTRAINT django_content_type_app_label_model_76bd3d3b_uniq UNIQUE (app_label, model);
+
+
+--
+-- Name: django_content_type_pkey; Type: CONSTRAINT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY django_content_type
+    ADD CONSTRAINT django_content_type_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY django_migrations
+    ADD CONSTRAINT django_migrations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_session_pkey; Type: CONSTRAINT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY django_session
+    ADD CONSTRAINT django_session_pkey PRIMARY KEY (session_key);
+
+
+--
+-- Name: accounts_user_email_b2644a56_like; Type: INDEX; Schema: public; Owner: victor
+--
+
+CREATE INDEX accounts_user_email_b2644a56_like ON accounts_user USING btree (email varchar_pattern_ops);
+
+
+--
+-- Name: accounts_user_groups_group_id_bd11a704; Type: INDEX; Schema: public; Owner: victor
+--
+
+CREATE INDEX accounts_user_groups_group_id_bd11a704 ON accounts_user_groups USING btree (group_id);
+
+
+--
+-- Name: accounts_user_groups_user_id_52b62117; Type: INDEX; Schema: public; Owner: victor
+--
+
+CREATE INDEX accounts_user_groups_user_id_52b62117 ON accounts_user_groups USING btree (user_id);
+
+
+--
+-- Name: accounts_user_user_permissions_permission_id_113bb443; Type: INDEX; Schema: public; Owner: victor
+--
+
+CREATE INDEX accounts_user_user_permissions_permission_id_113bb443 ON accounts_user_user_permissions USING btree (permission_id);
+
+
+--
+-- Name: accounts_user_user_permissions_user_id_e4f0a161; Type: INDEX; Schema: public; Owner: victor
+--
+
+CREATE INDEX accounts_user_user_permissions_user_id_e4f0a161 ON accounts_user_user_permissions USING btree (user_id);
+
+
+--
+-- Name: auth_group_name_a6ea08ec_like; Type: INDEX; Schema: public; Owner: victor
+--
+
+CREATE INDEX auth_group_name_a6ea08ec_like ON auth_group USING btree (name varchar_pattern_ops);
+
+
+--
+-- Name: auth_group_permissions_group_id_b120cbf9; Type: INDEX; Schema: public; Owner: victor
+--
+
+CREATE INDEX auth_group_permissions_group_id_b120cbf9 ON auth_group_permissions USING btree (group_id);
+
+
+--
+-- Name: auth_group_permissions_permission_id_84c5c92e; Type: INDEX; Schema: public; Owner: victor
+--
+
+CREATE INDEX auth_group_permissions_permission_id_84c5c92e ON auth_group_permissions USING btree (permission_id);
+
+
+--
+-- Name: auth_permission_content_type_id_2f476e4b; Type: INDEX; Schema: public; Owner: victor
+--
+
+CREATE INDEX auth_permission_content_type_id_2f476e4b ON auth_permission USING btree (content_type_id);
+
+
+--
+-- Name: authtoken_token_key_10f0b77e_like; Type: INDEX; Schema: public; Owner: victor
+--
+
+CREATE INDEX authtoken_token_key_10f0b77e_like ON authtoken_token USING btree (key varchar_pattern_ops);
+
+
+--
+-- Name: core_news_tags_news_id_717b2587; Type: INDEX; Schema: public; Owner: victor
+--
+
+CREATE INDEX core_news_tags_news_id_717b2587 ON core_news_tags USING btree (news_id);
+
+
+--
+-- Name: core_news_tags_tag_id_dba9d880; Type: INDEX; Schema: public; Owner: victor
+--
+
+CREATE INDEX core_news_tags_tag_id_dba9d880 ON core_news_tags USING btree (tag_id);
+
+
+--
+-- Name: django_admin_log_content_type_id_c4bce8eb; Type: INDEX; Schema: public; Owner: victor
+--
+
+CREATE INDEX django_admin_log_content_type_id_c4bce8eb ON django_admin_log USING btree (content_type_id);
+
+
+--
+-- Name: django_admin_log_user_id_c564eba6; Type: INDEX; Schema: public; Owner: victor
+--
+
+CREATE INDEX django_admin_log_user_id_c564eba6 ON django_admin_log USING btree (user_id);
+
+
+--
+-- Name: django_session_expire_date_a5c62663; Type: INDEX; Schema: public; Owner: victor
+--
+
+CREATE INDEX django_session_expire_date_a5c62663 ON django_session USING btree (expire_date);
+
+
+--
+-- Name: django_session_session_key_c0390e0f_like; Type: INDEX; Schema: public; Owner: victor
+--
+
+CREATE INDEX django_session_session_key_c0390e0f_like ON django_session USING btree (session_key varchar_pattern_ops);
+
+
+--
+-- Name: accounts_user_groups_group_id_bd11a704_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY accounts_user_groups
+    ADD CONSTRAINT accounts_user_groups_group_id_bd11a704_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: accounts_user_groups_user_id_52b62117_fk_accounts_user_id; Type: FK CONSTRAINT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY accounts_user_groups
+    ADD CONSTRAINT accounts_user_groups_user_id_52b62117_fk_accounts_user_id FOREIGN KEY (user_id) REFERENCES accounts_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: accounts_user_user_p_permission_id_113bb443_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY accounts_user_user_permissions
+    ADD CONSTRAINT accounts_user_user_p_permission_id_113bb443_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: accounts_user_user_p_user_id_e4f0a161_fk_accounts_; Type: FK CONSTRAINT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY accounts_user_user_permissions
+    ADD CONSTRAINT accounts_user_user_p_user_id_e4f0a161_fk_accounts_ FOREIGN KEY (user_id) REFERENCES accounts_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_group_permissio_permission_id_84c5c92e_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY auth_group_permissions
+    ADD CONSTRAINT auth_group_permissio_permission_id_84c5c92e_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_group_permissions_group_id_b120cbf9_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_b120cbf9_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_permission_content_type_id_2f476e4b_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_2f476e4b_fk_django_co FOREIGN KEY (content_type_id) REFERENCES django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: authtoken_token_user_id_35299eff_fk_accounts_user_id; Type: FK CONSTRAINT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY authtoken_token
+    ADD CONSTRAINT authtoken_token_user_id_35299eff_fk_accounts_user_id FOREIGN KEY (user_id) REFERENCES accounts_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: core_news_tags_news_id_717b2587_fk_core_news_id; Type: FK CONSTRAINT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY core_news_tags
+    ADD CONSTRAINT core_news_tags_news_id_717b2587_fk_core_news_id FOREIGN KEY (news_id) REFERENCES core_news(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: core_news_tags_tag_id_dba9d880_fk_core_tag_id; Type: FK CONSTRAINT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY core_news_tags
+    ADD CONSTRAINT core_news_tags_tag_id_dba9d880_fk_core_tag_id FOREIGN KEY (tag_id) REFERENCES core_tag(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log_content_type_id_c4bce8eb_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY django_admin_log
+    ADD CONSTRAINT django_admin_log_content_type_id_c4bce8eb_fk_django_co FOREIGN KEY (content_type_id) REFERENCES django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log_user_id_c564eba6_fk_accounts_user_id; Type: FK CONSTRAINT; Schema: public; Owner: victor
+--
+
+ALTER TABLE ONLY django_admin_log
+    ADD CONSTRAINT django_admin_log_user_id_c564eba6_fk_accounts_user_id FOREIGN KEY (user_id) REFERENCES accounts_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+

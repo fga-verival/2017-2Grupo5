@@ -10,197 +10,82 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
-import os
-import datetime
+from .config.apps import PRODUCTION_APPS, DEVELOPMENT_APPS
+from .config.middleware import MIDDLEWARE
+from .config.template import TEMPLATES
+from .config.security import SECRET_KEY
+from .config.database import DB_DEVELOPMENT, DB_PRODUCTION
+from .config.password import AUTH_PASSWORD_VALIDATORS
+from .config.files import STATIC_ROOT, MEDIA_ROOT, STATIC_URL, MEDIA_URL
+from .config.rest import REST_FRAMEWORK, JWT_AUTH
+from .config.internacionalization import (
+    PORTUGUESE,
+    TIME_ZONE,
+    INTERNATIONALIZATION,
+    FORMAT_DATES,
+    TIMEZONE_DATETIMES
+)
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+# development or production enviroment
+MODE_ENVIROMENT = 'production'
 
+# secret key
+SECRET_KEY = SECRET_KEY
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = os.getenv('SECRET_KEY', 'SECRET_KEY_DEFAULT')
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-# Allow all host/domain to access this aplication
-ALLOWED_HOSTS = ['*']
-
-
-# Application definition
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'rest_framework',
-    'rest_framework.authtoken',
-    'accounts',
-    'core',
-]
-
-
-# Middlewares
-MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.locale.LocaleMiddleware'
-]
-
+# middlewares
+MIDDLEWARE = MIDDLEWARE
 
 # Urls
 ROOT_URLCONF = 'tbl.urls'
 
-
 # Templates
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
-    },
-]
+TEMPLATES = TEMPLATES
 
-
-# WSGI
-# Python dotted path to the WSGI application used by Django's runserver.
+# WSGI - Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'tbl.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-DATABASES = {
-    'default': {
-        # Add postgresql database on production
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        # Name of database file
-        'NAME': 'tbl',
-        # Name of user on postgresql
-        'USER': 'victor',
-        # Password of user on postgresql
-        'PASSWORD': 'victorhad',
-        # Host and port of postgresql server
-        'HOST': '127.0.0.1',
-        'PORT': '' # 8000 is default
-    }
-}
-
 # Custom user profile
-# Tell Django to use our custom user model instead of its built in
-# default user model.
+# Tell Django to use our custom user model
+# instead of its built in default user model.
 AUTH_USER_MODEL = 'accounts.User'
 
-
 # Password validation
-# https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
-# They are validators of passwords to create strong password in the system
-password_validation = 'django.contrib.auth.password_validation'
-
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': '{password}.UserAttributeSimilarityValidator'
-                .format(password=password_validation),
-    },
-    {
-        'NAME': '{password}.MinimumLengthValidator'
-                .format(password=password_validation),
-    },
-    {
-        'NAME': '{password}.CommonPasswordValidator'
-                .format(password=password_validation),
-    },
-    {
-        'NAME': '{password}.NumericPasswordValidator'
-                .format(password=password_validation),
-    },
-]
-
+AUTH_PASSWORD_VALIDATORS = AUTH_PASSWORD_VALIDATORS
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
-LANGUAGES = (
-    ('en-us', u'English'),
-    ('pt-BR', u'Português'),
-)
-# Language code for this installation. All choices can be found here:
-# http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'pt-BR'
-# Local time zone for this installation. Choices can be found here:
-# http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
-# although not all choices may be available on all operating systems.
-# In a Windows environment this must be set to your system time zone.
-TIME_ZONE = 'UTC'
-# If you set this to False, Django will make some optimizations so as not
-# to load the internationalization machinery.
-USE_I18N = True
-# If you set this to False, Django will not format dates, numbers and
-# calendars according to the current locale.
-USE_L10N = True
-# If you set this to False, Django will not use timezone-aware datetimes.
-USE_TZ = True
+LANGUAGE_CODE = PORTUGUESE
+TIME_ZONE = TIME_ZONE
+USE_I18N = INTERNATIONALIZATION
+USE_L10N = FORMAT_DATES
+USE_TZ = TIMEZONE_DATETIMES
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
-
-# Absolute path to the directory static files should be collected to.
-# Don't put anything in this directory yourself; store your static files
-# in apps' "static/" subdirectories and in STATICFILES_DIRS.
-# Example: "/var/www/example.com/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-# URL prefix for static files.
-# Example: "http://example.com/static/", "http://static.example.com/"
-STATIC_URL = '/static/'
-
-# Absolute filesystem path to the directory that will hold user-uploaded files.
-# Example: "/var/www/example.com/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
-# URL that handles the media served from MEDIA_ROOT. Make sure to use a
-# trailing slash.
-# Examples: "http://example.com/media/", "http://media.example.com/"
-MEDIA_URL = '/media/'
+STATIC_ROOT = STATIC_ROOT
+STATIC_URL = STATIC_URL
+MEDIA_ROOT = MEDIA_ROOT
+MEDIA_URL = MEDIA_URL
 
 # Django Rest Framework
 # http://www.django-rest-framework.org/
 # http://getblimp.github.io/django-rest-framework-jwt/
-REST_FRAMEWORK = {
-    # Use the extension ModHeaders of Chrome to login
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication'
-    ),
-    # All tests with json format
-    'TEST_REQUEST_DEFAULT_FORMAT': 'json'
-}
-
-JWT_AUTH = {
-    # Expiration time of token: 30 min
-    # When expirated we need to get another token
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=1800),
-}
+REST_FRAMEWORK = REST_FRAMEWORK
+JWT_AUTH = JWT_AUTH
 
 
-# Override settings.py configuration to local_settings.py if it exists
-# If you need update the project you can create a file local_settings copying
-# the local_settings.py.example, this will get debug=True
-try:
-    from .local_settings import *
-except ImportError:
-    pass
+# Enviroments mode (development or production)
+if MODE_ENVIROMENT == 'development':
+    DEBUG = True
+    DATABASES = DB_DEVELOPMENT
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    INSTALLED_APPS = DEVELOPMENT_APPS
+    # Allow all host/domain to access this aplication
+    ALLOWED_HOSTS = []
+elif MODE_ENVIROMENT == 'production':
+    DEBUG = False
+    DATABASES = DB_PRODUCTION
+    INSTALLED_APPS = PRODUCTION_APPS
+    # Allow all host/domain to access this aplication
+    ALLOWED_HOSTS = ['*']
