@@ -1,4 +1,4 @@
-# Ambiente de desenvolvimento
+# Developer enviroment
 
 import os
 
@@ -39,6 +39,15 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware'
 ]
+
+DATABASES = {
+    'default': {
+        # Add 'postgresql_psycopg2' or 'mysql' or 'sqlite3' or 'oracle'
+        'ENGINE': 'django.db.backends.sqlite3',
+        # Path to database file
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 

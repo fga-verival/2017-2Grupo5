@@ -20,7 +20,7 @@ env:
   - DOCKER_COMPOSE_VERSION=1.4.2
 
 # Install project dependencies
-before_script:
+install:
   - docker-compose up -d
 
 # Run the tests and create coverage.xml
