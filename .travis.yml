@@ -21,9 +21,7 @@ env:
 
 # Install project dependencies
 install:
-  - docker build -t ubuntu/tbl .
-  - docker run -d ubuntu/tbl
-  # - docker-compose up -d
+  - docker-compose up -d
 
 # Run the tests and create coverage.xml
 script:

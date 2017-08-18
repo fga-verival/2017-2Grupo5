@@ -21,7 +21,7 @@ services:
     # Set the secret_key to enviroment
     environment:
       - SECRET_KEY='n=38@=sss#wz02i6j^%edl3-0n^=5l%^d(t=q^a088hi816-f0'
-    # Forwards the exposed port 5050 on the host machine to port 5050 on the container.
+    # Forwards the exposed port 8000 on the host machine to port 8000 on the container.
     ports:
       - '8000:8000'
     depends_on:

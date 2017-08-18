@@ -27,7 +27,7 @@ from .config.internacionalization import (
 )
 
 # development or production enviroment
-MODE_ENVIROMENT = 'production'
+MODE_ENVIROMENT = 'development'
 
 # secret key
 SECRET_KEY = SECRET_KEY
