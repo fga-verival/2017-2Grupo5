@@ -1,0 +1,32 @@
+version: '2'
+services:
+  # Nginx proxy server. It will serve static files and redirect all other
+  # requests to the Django TBL application. Both containers communicate
+  # using a TCP connection on port 8000.
+  nginx-proxy:
+    image: nginx:1.11
+    container_name: nginx_proxy
+    volumes:
+      - ./nginx_tbl.conf:/etc/nginx/nginx.conf
+      - ./staticfiles/media/:/var/www/media/
+      - ./staticfiles/static/:/var/www/static/
+    depends_on:
+      - tbl
+    ports:
+      - '8005:8005'
+
+  tbl:
+    # Uses an image that's built from the Dockerfile in the dockers directory
+    build: .
+    # Name the image and insert a version
+    image: tbl_image:2.0
+    # Specify a custom container name.
+    container_name: tbl
+    # Set the secret_key to enviroment
+    environment:
+      - SECRET_KEY='n=38@=sss#wz02i6j^%edl3-0n^=5l%^d(t=q^a088hi816-f0'
+    # Forwards the exposed port 5050 on the host machine to port 5050 on the container.
+    ports:
+      - '8000:8000'
+    # command to execute inside the docker
+    command: ['python3', 'tbl/manage.py', 'runserver', '0.0.0.0:8000']

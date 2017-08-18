@@ -1,33 +1,27 @@
+sudo: required
 language: python
 
 # Specify the version of python
 python:
   - "3.5"
 
+# Specify branchs that travis will monitor
 branches:
   only:
     - master
     - dev
 
-# Update the system
-before_install:
-  - sudo apt-get update
+# Use docker to deploy
+service:
+  - docker
 
-# Install enviroment dependencies
-install:
-  - sudo apt-get install -y python3-dev
-  - sudo apt-get install -y libpq-dev
-  - sudo apt-get install -y gettext
-  - sudo apt-get install -y build-essential
+# Specify the docker-compose version to deploy
+env:
+  - DOCKER_COMPOSE_VERSION=1.4.2
 
 # Install project dependencies
 before_script:
-  - pip3 install -r tbl/requirements.txt
-  - python3 tbl/manage.py makemigrations
-  - python3 tbl/manage.py migrate
-  - mkdir tbl/locale
-  - django-admin makemessages
-  - django-admin compilemessages
+  - docker-compose up -d
 
 # Run the tests and create coverage.xml
 script:
