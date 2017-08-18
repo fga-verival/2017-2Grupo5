@@ -25,9 +25,9 @@ install:
 
 # Run the tests and create coverage.xml
 script:
-  - pytest
-  - pytest --cov-report xml --cov=.
+  - docker exec tbl pytest
+  - docker exec tbl pytest --cov-report xml --cov=.
 
 # Insert a file coverage.xml into codacy to get coverage
 after_script:
-  - python-codacy-coverage -r coverage.xml
+  - docker exec -it tbl python-codacy-coverage -r coverage.xml

@@ -7,13 +7,11 @@ services:
     image: nginx:1.11
     container_name: nginx_proxy
     volumes:
-      - ./nginx_tbl.conf:/etc/nginx/nginx.conf
-      - ./staticfiles/media/:/var/www/media/
-      - ./staticfiles/static/:/var/www/static/
+      - ./tbl/staticfiles/:/usr/share/nginx/html:ro
     depends_on:
       - tbl
     ports:
-      - '8005:8005'
+      - '8080:8080'
 
   tbl:
     # Uses an image that's built from the Dockerfile in the dockers directory

@@ -87,10 +87,17 @@ WSGI_APPLICATION = 'tbl.wsgi.application'
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 DATABASES = {
     'default': {
-        # Add 'postgresql_psycopg2' or 'mysql' or 'sqlite3' or 'oracle'
-        'ENGINE': 'django.db.backends.sqlite3',
-        # Path to database file
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # Add postgresql database on production
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        # Name of database file
+        'NAME': 'tbl',
+        # Name of user on postgresql
+        'USER': 'victor',
+        # Password of user on postgresql
+        'PASSWORD': 'victorhad',
+        # Host and port of postgresql server
+        'HOST': '127.0.0.1',
+        'PORT': '' # 8000 is default
     }
 }
 
@@ -163,7 +170,7 @@ STATIC_URL = '/static/'
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://example.com/media/", "http://media.example.com/"
