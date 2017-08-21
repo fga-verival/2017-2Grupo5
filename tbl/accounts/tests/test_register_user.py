@@ -2,7 +2,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
-from accounts.models import User
+from accounts.models import User, Teacher, Student
 
 
 class CreateUserTestCase(APITestCase):
@@ -35,7 +35,7 @@ class CreateUserTestCase(APITestCase):
         self.superuser.delete()
         self.user.delete()
 
-    def test_valid_create_user(self):
+    def test_valid_create_teacher_user(self):
         """
         Create a new user in the system.
         """
@@ -51,6 +51,27 @@ class CreateUserTestCase(APITestCase):
         response = self.client.post(self.url, data)
         self.assertEquals(response.status_code, status.HTTP_201_CREATED)
         self.assertEquals(User.objects.count(), 3)
+        self.assertEquals(Teacher.objects.count(), 1)
+        self.assertEquals(Student.objects.count(), 0)
+
+    def test_valid_create_student_user(self):
+        """
+        Create a new user in the system.
+        """
+
+        self.assertEquals(User.objects.count(), 2)
+        data = {
+            'name': 'Fulano de Tal',
+            'is_teacher': False,
+            'email': 'fulano@gmail.com',
+            'password': 'fulano123456',
+            'confirm_password': 'fulano123456'
+        }
+        response = self.client.post(self.url, data)
+        self.assertEquals(response.status_code, status.HTTP_201_CREATED)
+        self.assertEquals(User.objects.count(), 3)
+        self.assertEquals(Teacher.objects.count(), 0)
+        self.assertEquals(Student.objects.count(), 1)
 
     def test_invalid_same_email_created_user(self):
         """
@@ -67,10 +88,6 @@ class CreateUserTestCase(APITestCase):
         response = self.client.post(self.url, data)
         self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEquals(User.objects.count(), 2)
-        self.assertEquals(
-            response.data,
-            {'email': [_('User with this E-mail already exists.')]}
-        )
 
     def test_invalid_email_create_user(self):
         """

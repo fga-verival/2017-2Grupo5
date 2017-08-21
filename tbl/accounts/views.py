@@ -6,7 +6,7 @@ from rest_framework.generics import (
 from .serializers import (
     UserSerializer, UserRegisterSerializer, UserPasswordSerializer
 )
-from .models import User
+from .models import User, Teacher, Student
 from .permissions import UpdateOwnProfile, CreateListUserPermission
 
 

@@ -82,7 +82,7 @@ if MODE_ENVIROMENT == 'development':
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
     INSTALLED_APPS = DEVELOPMENT_APPS
     # Allow all host/domain to access this aplication
-    ALLOWED_HOSTS = []
+    ALLOWED_HOSTS = ['*']
 elif MODE_ENVIROMENT == 'production':
     DEBUG = False
     DATABASES = DB_PRODUCTION

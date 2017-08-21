@@ -184,3 +184,33 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name = _("User")
         verbose_name_plural = _("Users")
         ordering = ('email',)
+
+
+class Teacher(User):
+    """
+    Create the specific user Teacher that will manage the TBL sessions and
+    class
+    """
+
+    class Meta:
+        """
+        Some information about teacher class
+        """
+
+        verbose_name = _("Teacher")
+        verbose_name_plural = _("Teachers")
+
+
+class Student(User):
+    """
+    Create the specific user Student that will use the TBL sessions and
+    class
+    """
+
+    class Meta:
+        """
+        Some information about teacher class
+        """
+
+        verbose_name = _("Student")
+        verbose_name_plural = _("Students")

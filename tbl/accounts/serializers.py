@@ -2,7 +2,7 @@ from django.utils.translation import ugettext_lazy as _
 from rest_framework.serializers import (
     ModelSerializer, CharField, DateTimeField, ValidationError
 )
-from .models import User
+from .models import User, Teacher, Student
 
 
 class UserSerializer(ModelSerializer):
@@ -117,11 +117,19 @@ class UserRegisterSerializer(ModelSerializer):
         Create and return a new user.
         """
 
-        user = User(
-            email=validated_data['email'],
-            name=validated_data['name'],
-            is_teacher=validated_data['is_teacher']
-        )
+        if validated_data['is_teacher'] is True:
+            user = Teacher(
+                email=validated_data['email'],
+                name=validated_data['name'],
+                is_teacher=validated_data['is_teacher'],
+            )
+        else:
+            user = Student(
+                email=validated_data['email'],
+                name=validated_data['name'],
+                is_teacher=validated_data['is_teacher'],
+            )
+
         user.set_password(validated_data['password'])
         user.save()
 
