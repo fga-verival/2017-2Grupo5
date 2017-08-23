@@ -16,6 +16,7 @@ class UserSerializer(ModelSerializer):
             'id', 'email', 'name', 'institution', 'course', 'photo',
             'is_teacher', 'last_login', 'created_at', 'updated_at'
         )
+        extra_kwargs = {'is_teacher': {'read_only': True}}
 
 
 class UserPasswordSerializer(ModelSerializer):
