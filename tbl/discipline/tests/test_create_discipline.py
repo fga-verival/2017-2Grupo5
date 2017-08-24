@@ -1,3 +1,4 @@
+from django.utils.translation import ugettext_lazy as _
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
@@ -35,6 +36,7 @@ class CreateDisciplineTestCase(APITestCase):
         This method will run after any test.
         """
 
+        self.client.logout()
         self.teacher.delete()
         self.student.delete()
 
@@ -54,7 +56,7 @@ class CreateDisciplineTestCase(APITestCase):
         self.assertEquals(response.status_code, status.HTTP_201_CREATED)
         self.assertEquals(Discipline.objects.count(), 1)
 
-    def test_invalid_create_discipline(self):
+    def test_student_create_discipline(self):
         """
         Try to create a discipline by student.
         """
@@ -69,3 +71,78 @@ class CreateDisciplineTestCase(APITestCase):
         response = self.client.post(self.url, data)
         self.assertEquals(response.status_code, status.HTTP_403_FORBIDDEN)
         self.assertEquals(Discipline.objects.count(), 0)
+
+    def test_not_logged_create_discipline(self):
+        """
+        Try to create a discipline without be logged.
+        """
+
+        self.assertEquals(Discipline.objects.count(), 0)
+        data = {
+            'title': "Discipline 01",
+            'description': "Description 01",
+            'course': "Course 01"
+        }
+        response = self.client.post(self.url, data)
+        self.assertEquals(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEquals(Discipline.objects.count(), 0)
+
+    def test_invalid_empty_title_create_discipline(self):
+        """
+        Try to create a discipline without title
+        """
+
+        self.client.force_authenticate(self.teacher)
+        self.assertEquals(Discipline.objects.count(), 0)
+        data = {
+            'title': "",
+            'description': "Description 01",
+            'course': "Course 01"
+        }
+        response = self.client.post(self.url, data)
+        self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEquals(Discipline.objects.count(), 0)
+        self.assertEquals(
+            response.data,
+            {'title': [_('This field may not be blank.')]}
+        )
+
+    def test_invalid_empty_description_create_discipline(self):
+        """
+        Try to create a discipline without title
+        """
+
+        self.client.force_authenticate(self.teacher)
+        self.assertEquals(Discipline.objects.count(), 0)
+        data = {
+            'title': "Discipline 01",
+            'description': "",
+            'course': "Course 01"
+        }
+        response = self.client.post(self.url, data)
+        self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEquals(Discipline.objects.count(), 0)
+        self.assertEquals(
+            response.data,
+            {'description': [_('This field may not be blank.')]}
+        )
+
+    def test_invalid_empty_course_create_discipline(self):
+        """
+        Try to create a discipline without title
+        """
+
+        self.client.force_authenticate(self.teacher)
+        self.assertEquals(Discipline.objects.count(), 0)
+        data = {
+            'title': "Discipline 01",
+            'description': "Description 01",
+            'course': ""
+        }
+        response = self.client.post(self.url, data)
+        self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEquals(Discipline.objects.count(), 0)
+        self.assertEquals(
+            response.data,
+            {'course': [_('This field may not be blank.')]}
+        )

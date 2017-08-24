@@ -5,7 +5,7 @@ from accounts.models import Teacher
 from .models import Discipline
 
 
-class DisciplineListCreateSerializer(ModelSerializer):
+class DisciplineSerializer(ModelSerializer):
     """
     A serializer to list and register a new discipline.
     """
