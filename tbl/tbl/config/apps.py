@@ -10,6 +10,7 @@ PRODUCTION_APPS = [
     'rest_framework.authtoken',
     'accounts',
     'core',
+    'discipline',
 ]
 
 DEVELOPMENT_APPS = [
@@ -24,4 +25,5 @@ DEVELOPMENT_APPS = [
     'django_extensions',
     'accounts',
     'core',
+    'discipline',
 ]
