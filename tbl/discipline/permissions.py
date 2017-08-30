@@ -1,5 +1,7 @@
-from rest_framework.permissions import BasePermission, SAFE_METHODS
-from rest_framework.compat import is_authenticated
+from rest_framework.permissions import BasePermission
+from core.permissions import (
+    is_read_mode, is_logged, is_teacher
+)
 
 
 class OnlyLoggedTeacherCanCreateDiscipline(BasePermission):
@@ -9,15 +11,8 @@ class OnlyLoggedTeacherCanCreateDiscipline(BasePermission):
 
     @staticmethod
     def has_permission(request, view):
-        only_list_disciplines = request.method in SAFE_METHODS
-        is_logged = is_authenticated(request.user)
-        has_user = request.user
-        is_teacher = False
 
-        if has_user and is_logged:
-            is_teacher = request.user.is_teacher
-
-        if is_teacher or only_list_disciplines:
+        if is_teacher(request) or is_read_mode(request):
             return True
 
         return False
@@ -31,15 +26,21 @@ class UpdateYourOwnDisciplines(BasePermission):
 
     @staticmethod
     def has_object_permission(request, view, obj):
-        only_list_disciplines = request.method in SAFE_METHODS
-        is_logged = is_authenticated(request.user)
-        has_user = request.user
         can_update = False
 
-        if has_user and is_logged:
-            can_update = (obj.teacher.id == request.user.id)
+        if is_logged(request):
+            can_update = is_owner(request, obj)
 
-        if can_update or only_list_disciplines:
+        if can_update or is_read_mode(request):
             return True
 
         return False
+
+
+def is_owner(request, obj):
+    """
+    It will check if the object ID that they're trying to update
+    is the authenticated teacher object, their own object.
+    """
+
+    return obj.teacher.id == request.user.id

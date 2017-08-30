@@ -61,9 +61,30 @@ class UpdateDisciplineTestCase(APITestCase):
         self.assertEquals(response.status_code, status.HTTP_200_OK)
         self.assertEquals(response.data['title'], 'Discipline 02')
 
-    def test_invalid_update_discipline(self):
+    def test_invalid_update_discipline_by_not_logged_teacher(self):
         """
-        Test to can't update a specific discipline. Invalid description.
+        Test to update discipline by not logged user.
+        """
+
+        data = DisciplineSerializer(self.discipline).data
+        data.update({'title': 'Discipline 02'})
+        response = self.client.put(self.url, data)
+        self.assertEquals(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_invalid_update_by_student(self):
+        """
+        Only teacher can update discipline
+        """
+
+        self.client.force_authenticate(self.student)
+        data = DisciplineSerializer(self.discipline).data
+        data.update({'description': 'Update description'})
+        response = self.client.put(self.url, data)
+        self.assertEquals(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_invalid_description_update_discipline(self):
+        """
+        Test can't update a specific discipline. Invalid description.
         """
 
         self.client.force_authenticate(self.teacher)
@@ -74,6 +95,36 @@ class UpdateDisciplineTestCase(APITestCase):
         self.assertEquals(
             response.data,
             {'description': [_('This field may not be blank.')]}
+        )
+
+    def test_invalid_title_update_discipline(self):
+        """
+        Test can't update a specific discipline. Invalid title.
+        """
+
+        self.client.force_authenticate(self.teacher)
+        data = DisciplineSerializer(self.discipline).data
+        data.update({'title': ''})
+        response = self.client.put(self.url, data)
+        self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEquals(
+            response.data,
+            {'title': [_('This field may not be blank.')]}
+        )
+
+    def test_invalid_course_update_discipline(self):
+        """
+        Test can't update a specific discipline. Invalid course.
+        """
+
+        self.client.force_authenticate(self.teacher)
+        data = DisciplineSerializer(self.discipline).data
+        data.update({'course': ''})
+        response = self.client.put(self.url, data)
+        self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEquals(
+            response.data,
+            {'course': [_('This field may not be blank.')]}
         )
 
     def test_invalid_update_another_discipline(self):
@@ -88,17 +139,6 @@ class UpdateDisciplineTestCase(APITestCase):
             password='123456'
         )
         self.client.force_authenticate(self.teacher2)
-        data = DisciplineSerializer(self.discipline).data
-        data.update({'description': 'Update description'})
-        response = self.client.put(self.url, data)
-        self.assertEquals(response.status_code, status.HTTP_403_FORBIDDEN)
-
-    def test_invalid_update_by_student(self):
-        """
-        Only teacher can update discipline
-        """
-
-        self.client.force_authenticate(self.student)
         data = DisciplineSerializer(self.discipline).data
         data.update({'description': 'Update description'})
         response = self.client.put(self.url, data)

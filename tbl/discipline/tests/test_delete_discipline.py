@@ -93,6 +93,17 @@ class DeleteUserTestCase(APITestCase):
         self.assertEquals(response.status_code, status.HTTP_403_FORBIDDEN)
         self.assertEquals(Discipline.objects.count(), 1)
 
+    def test_invalid_delete_discipline_by_not_logged_user(self):
+        """
+        Not logged user can't delete disciplines.
+        """
+
+        self.assertEquals(Discipline.objects.count(), 1)
+        response = self.client.delete(self.url)
+        self.assertEquals(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEquals(Discipline.objects.count(), 1)
+
+
     def test_not_find_discipline_to_delete(self):
         """
         Can't find discipline to delete, invalid url.

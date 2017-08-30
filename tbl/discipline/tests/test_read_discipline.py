@@ -48,11 +48,39 @@ class ReadDisciplineTestCase(APITestCase):
         self.student.delete()
         self.discipline.delete()
 
-    def test_valid_discipline_list(self):
+    def test_valid_not_logged_discipline_list(self):
         """
-        Test found the discipline list.
+        Test found the discipline list not logged.
         """
 
+        disciplines = Discipline.objects.all()
+        serializer = DisciplineSerializer(disciplines, many=True)
+        url = reverse('discipline:list-create')
+        response = self.client.get(url)
+        self.assertEquals(Discipline.objects.count(), 1)
+        self.assertEquals(response.data, serializer.data)
+        self.assertEquals(response.status_code, status.HTTP_200_OK)
+
+    def test_valid_logged_discipline_list(self):
+        """
+        Test found the discipline list logged.
+        """
+
+        self.client.force_authenticate(self.teacher)
+        disciplines = Discipline.objects.all()
+        serializer = DisciplineSerializer(disciplines, many=True)
+        url = reverse('discipline:list-create')
+        response = self.client.get(url)
+        self.assertEquals(Discipline.objects.count(), 1)
+        self.assertEquals(response.data, serializer.data)
+        self.assertEquals(response.status_code, status.HTTP_200_OK)
+
+    def test_valid_logged_student_discipline_list(self):
+        """
+        Test found the discipline list by student.
+        """
+
+        self.client.force_authenticate(self.student)
         disciplines = Discipline.objects.all()
         serializer = DisciplineSerializer(disciplines, many=True)
         url = reverse('discipline:list-create')

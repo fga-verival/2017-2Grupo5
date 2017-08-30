@@ -7,7 +7,8 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('accounts.urls')),
-    url(r'^disciplines/', include('discipline.urls')),
+    url(r'', include('discipline.urls')),
+    url(r'', include('classroom.urls')),
     url(r'', include('core.urls')),
     # This url will display a system login form
     url(

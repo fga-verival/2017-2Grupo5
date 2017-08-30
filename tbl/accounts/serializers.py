@@ -1,22 +1,52 @@
 from django.utils.translation import ugettext_lazy as _
 from rest_framework.serializers import (
-    ModelSerializer, CharField, DateTimeField, ValidationError
+    ModelSerializer, CharField, DateTimeField, ValidationError,
+    SerializerMethodField
 )
 from .models import User, Teacher, Student
+from discipline.models import Discipline
+from classroom.models import ClassRoom
 
 
 class UserSerializer(ModelSerializer):
     """
     A serializer for our user profile objects.
     """
+    disciplines = SerializerMethodField()
+    classes = SerializerMethodField()
 
     class Meta:
         model = User
         fields = (
             'id', 'email', 'name', 'institution', 'course', 'photo',
-            'is_teacher', 'last_login', 'created_at', 'updated_at'
+            'is_teacher', 'disciplines', 'classes', 'last_login',
+            'created_at', 'updated_at'
         )
         extra_kwargs = {'is_teacher': {'read_only': True}}
+
+    def get_disciplines(self, obj):
+        """
+        If user is a teacher get his disciplines.
+        """
+
+        if obj.is_teacher:
+            queryset = Discipline.objects.filter(teacher=obj.id)
+            disciplines = []
+            for discipline in queryset:
+                disciplines.append(discipline.id)
+            return disciplines
+        else:
+            return []
+
+    def get_classes(self, obj):
+        """
+        If user is a student get their classes.
+        """
+
+        if not obj.is_teacher:
+            return []
+        else:
+            return []
 
 
 class UserPasswordSerializer(ModelSerializer):
@@ -82,13 +112,40 @@ class UserRegisterSerializer(ModelSerializer):
         read_only=True
     )
 
+    disciplines = SerializerMethodField()
+    classes = SerializerMethodField()
+
     class Meta:
         model = User
         fields = (
             'id', 'name', 'email', 'institution', 'course', 'photo',
-            'is_teacher', 'last_login', 'created_at', 'updated_at',
-            'password', 'confirm_password'
+            'is_teacher', 'disciplines', 'classes', 'last_login',
+            'created_at', 'updated_at', 'password', 'confirm_password'
         )
+
+    def get_disciplines(self, obj):
+        """
+        If user is a teacher get his disciplines.
+        """
+
+        if obj.is_teacher:
+            queryset = Discipline.objects.filter(teacher=obj.id)
+            disciplines = []
+            for discipline in queryset:
+                disciplines.append(discipline.id)
+            return disciplines
+        else:
+            return []
+
+    def get_classes(self, obj):
+        """
+        If user is a student get their classes.
+        """
+
+        if not obj.is_teacher:
+            return []
+        else:
+            return []
 
     @staticmethod
     def validate(data):

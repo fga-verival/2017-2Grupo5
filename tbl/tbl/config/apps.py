@@ -11,6 +11,7 @@ PRODUCTION_APPS = [
     'accounts',
     'core',
     'discipline',
+    'classroom',
 ]
 
 DEVELOPMENT_APPS = [
@@ -26,4 +27,5 @@ DEVELOPMENT_APPS = [
     'accounts',
     'core',
     'discipline',
+    'classroom',
 ]
