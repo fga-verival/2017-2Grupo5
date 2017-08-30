@@ -12,7 +12,7 @@ class CreateUpdateDestroyAdminPermission(BasePermission):
         if is_read_mode(request):
             return True
 
-        return has_user(request) and is_logged(request) and is_admin(request)
+        return is_logged(request) and is_admin(request)
 
 
 def is_read_mode(request):
@@ -31,15 +31,7 @@ def is_logged(request):
     Verify if user is logged or not
     """
 
-    return is_authenticated(request.user)
-
-
-def has_user(request):
-    """
-    Verify if has a user in the system.
-    """
-
-    return request.user
+    return request.user and is_authenticated(request.user)
 
 
 def is_admin(request):
@@ -50,10 +42,13 @@ def is_admin(request):
     return request.user.is_staff
 
 
-def is_owner(request, obj):
+def is_teacher(request):
     """
-    It will check if the object ID that they're trying to update
-    is the authenticated user object, their own object.
+    Verify if logged user is teacher.
     """
+    is_teacher = False
 
-    return obj.id == request.user.id
+    if is_logged(request):
+        is_teacher = request.user.is_teacher
+
+    return is_teacher

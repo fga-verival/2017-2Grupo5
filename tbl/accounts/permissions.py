@@ -1,7 +1,7 @@
 from rest_framework.permissions import BasePermission, SAFE_METHODS
 from rest_framework.compat import is_authenticated
 from core.permissions import (
-    is_read_mode, is_logged, has_user, is_admin, is_owner
+    is_read_mode, is_logged, is_admin
 )
 
 
@@ -34,7 +34,16 @@ class CreateListUserPermission(BasePermission):
         if is_read_mode(request) or not is_logged(request):
             return True
 
-        if is_logged(request) and has_user(request) and is_admin(request):
+        if is_logged(request) and is_admin(request):
             return True
 
         return False
+
+
+def is_owner(request, obj):
+    """
+    It will check if the object ID that they're trying to update
+    is the authenticated user object, their own object.
+    """
+
+    return obj.id == request.user.id

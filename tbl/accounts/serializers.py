@@ -5,6 +5,7 @@ from rest_framework.serializers import (
 )
 from .models import User, Teacher, Student
 from discipline.models import Discipline
+from classroom.models import ClassRoom
 
 
 class UserSerializer(ModelSerializer):

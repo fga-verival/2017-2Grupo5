@@ -4,12 +4,12 @@ from . import views
 app_name = 'discipline'
 urlpatterns = [
     url(
-        r'^$',
+        r'^disciplines/$',
         views.DisciplineListCreateAPIView.as_view(),
         name='list-create'
     ),
     url(
-        r'^(?P<pk>[0-9]+)/$',
+        r'^disciplines/(?P<pk>[0-9]+)/$',
         views.DisciplineAPIView.as_view(),
         name='details'
     ),
