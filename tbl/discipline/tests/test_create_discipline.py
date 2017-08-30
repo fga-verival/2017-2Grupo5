@@ -109,7 +109,7 @@ class CreateDisciplineTestCase(APITestCase):
 
     def test_invalid_empty_description_create_discipline(self):
         """
-        Try to create a discipline without title
+        Tr to create a discipline without title
         """
 
         self.client.force_authenticate(self.teacher)
