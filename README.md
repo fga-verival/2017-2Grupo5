@@ -10,7 +10,7 @@ Para executar os 101 casos de testes:
 
 Obs: virtualenvwrapper e python 3.5 deve ser instalado.
 
-Documentação: [Wiki - TBL](https://github.com/TeamBasedLearning/Backend/wiki)
+Documentação: [Wiki - TBL](https://github.com/fga-verival/2017-2Grupo5/wiki)
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/316446e0dced4805b44e58a6fc892594)](https://www.codacy.com/app/VictorArnaud/Service?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=TeamBasedLearning/Service&amp;utm_campaign=Badge_Grade)
 
